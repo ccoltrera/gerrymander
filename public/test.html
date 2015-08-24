@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/1.2.0/superagent.min.js"></script>
+    <script>
+var stateAbr = {
+  "Alabama": "AL",
+  "Alaska": "AK",
+  "Arizona": "AZ",
+  "Arkansas": "AR",
+  "California": "CA",
+  "Colorado": "CO",
+  "Connecticut": "CT",
+  "Delaware": "DE",
+  "District of Columbia": "DC",
+  "Florida": "FL",
+  "Georgia": "GA",
+  "Hawaii": "HI",
+  "Idaho": "ID",
+  "Illinois": "IL",
+  "Indiana": "IN",
+  "Iowa": "IA",
+  "Kansas": "KS",
+  "Kentucky": "KY",
+  "Louisiana": "LA",
+  "Maine": "ME",
+  "Maryland": "MD",
+  "Massachusetts": "MA",
+  "Michigan": "MI",
+  "Minnesota": "MN",
+  "Mississippi": "MS",
+  "Missouri": "MO",
+  "Montana": "MT",
+  "Nebraska": "NE",
+  "Nevada": "NV",
+  "New Hampshire": "NH",
+  "New Jersey": "NJ",
+  "New Mexico": "NM",
+  "New York": "NY",
+  "North Carolina": "NC",
+  "North Dakota": "ND",
+  "Ohio": "OH",
+  "Oklahoma": "OK",
+  "Oregon": "OR",
+  "Pennsylvania": "PA",
+  "Rhode Island": "RI",
+  "South Carolina": "SC",
+  "South Dakota": "SD",
+  "Tennessee": "TN",
+  "Texas": "TX",
+  "Utah": "UT",
+  "Vermont": "VT",
+  "Virginia": "VA",
+  "Washington": "WA",
+  "West Virginia": "WV",
+  "Wisconsin": "WI",
+  "Wyoming": "WY",
+}
+
+var repdata = {};
+
+function getReps() {
+  superagent
+    .get('https://www.govtrack.us/api/v2/role?current=true&role_type=representative&limit=500')
+    .end(function(err, res) {
+      for (var i=0; i<res.body.objects.length; i++) {
+        repdata[res.body.objects[i].state + res.body.objects[i].district] = res.body.objects[i];
+      }
+    });
+}
+
+getReps();
+
+var map;
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 5,
+    center: {lat: 40, lng: -95}
+  });
+
+  for (state in stateAbr) {
+    var filename = stateAbr[state] + '.geojson';
+    map.data.loadGeoJson(filename);
+  }
+
+  map.data.setStyle(function(feature) {
+    var color;
+
+    (repdata[ stateAbr[feature.G.statename] + feature.G.district]) ? (
+      color = (repdata[ stateAbr[feature.G.statename] + feature.G.district].party === 'Republican') ? 'red' : 'blue'
+    ) : (
+      color = 'gray'
+    )
+
+    return ({
+      fillColor: color,
+      strokeColor: color,
+      strokeWeight: 1
+    });
+  });
+
+  map.data.addListener('click', function(event) {
+    console.log("District: " + event.feature.G.district);
+    console.log("State: " + event.feature.G.statename);
+    console.log("State Abbr: " + stateAbr[event.feature.G.statename]);
+  });
+
+}
+
+    </script>
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap">
+    </script>
+  </body>
+</html>
