@@ -1,0 +1,34 @@
+{
+  "name": "gerrymander",
+  "version": "0.1.0",
+  "description": "Visualize gerrymandering!",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify js/app.jsx -o built/bundle.js",
+    "watch": "watchify -o built/bundle.js -v -d js/app.jsx"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ccoltrera/gerrymander.git"
+  },
+  "keywords": [
+    "gerrymander",
+    "piaget",
+    "civic",
+    "education"
+  ],
+  "author": "Colin Coltrera, David Schneider, Erik Sjaastad",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ccoltrera/gerrymander/issues"
+  },
+  "homepage": "https://github.com/ccoltrera/gerrymander#readme",
+  "devDependencies": {
+    "browserify": "^11.0.1",
+    "react": "^0.13.3",
+    "reactify": "^1.1.1",
+    "superagent": "^1.3.0",
+    "watchify": "^3.3.1"
+  }
+}
