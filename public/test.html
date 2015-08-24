@@ -73,6 +73,60 @@ var stateAbr = {
   "Wyoming": "WY",
 }
 
+var stateFP = {
+  "01": "AL",
+  "02": "AK",
+  "04": "AZ",
+  "05": "AR",
+  "06": "CA",
+  "08": "CO",
+  "09": "CT",
+  "10": "DE",
+  "11": "DC",
+  "12": "FL",
+  "13": "GA",
+  "15": "HI",
+  "16": "ID",
+  "17": "IL",
+  "18": "IN",
+  "19": "IA",
+  "20": "KS",
+  "21": "KY",
+  "22": "LA",
+  "23": "ME",
+  "24": "MD",
+  "25": "MA",
+  "26": "MI",
+  "27": "MN",
+  "28": "MS",
+  "29": "MO",
+  "30": "MT",
+  "31": "NE",
+  "32": "NV",
+  "33": "NH",
+  "34": "NJ",
+  "35": "NM",
+  "36": "NY",
+  "37": "NC",
+  "38": "ND",
+  "39": "OH",
+  "40": "OK",
+  "41": "OR",
+  "42": "PA",
+  "44": "RI",
+  "45": "SC",
+  "46": "SD",
+  "47": "TN",
+  "48": "TX",
+  "49": "UT",
+  "50": "VT",
+  "51": "VA",
+  "53": "WA",
+  "54": "WV",
+  "55": "WI",
+  "56": "WY",
+};
+
 var repdata = {};
 
 function getReps() {
@@ -80,45 +134,99 @@ function getReps() {
     .get('https://www.govtrack.us/api/v2/role?current=true&role_type=representative&limit=500')
     .end(function(err, res) {
       for (var i=0; i<res.body.objects.length; i++) {
-        repdata[res.body.objects[i].state + res.body.objects[i].district] = res.body.objects[i];
+        if (String(res.body.objects[i].district).length == 1) {
+          repdata[res.body.objects[i].state + '0' + res.body.objects[i].district] = res.body.objects[i];
+        } else {
+          repdata[res.body.objects[i].state + res.body.objects[i].district] = res.body.objects[i];
+        }
       }
     });
 }
 
 getReps();
 
-var map;
 function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
+  var styles = [
+    {
+      stylers: [
+        { visibility: "simplified" },
+        { saturation: -20 }
+      ]
+    },{
+      featureType: "poi",
+      stylers: [
+        { visibility: "off" }
+      ]
+    },{
+      featureType: "road",
+      elementType: "geometry",
+      stylers: [
+        { color: "#999999" }
+      ]
+    },{
+      featureType: "road",
+      elementType: "labels",
+      stylers: [
+        { visibility: "off" }
+      ]
+    },{
+      featureType: "landscape",
+      stylers: [
+        { visibility: "off" }
+      ]
+    }
+  ];
+
+  var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 5,
     center: {lat: 40, lng: -95}
   });
 
-  for (state in stateAbr) {
-    var filename = stateAbr[state] + '.geojson';
-    map.data.loadGeoJson(filename);
-  }
+  map.setOptions({styles: styles});
+
+  // for (state in stateAbr) {
+  //   var filename = stateAbr[state] + '.less.geojson';
+  //   map.data.loadGeoJson(filename);
+  // }
+
+  // map.data.setStyle(function(feature) {
+  //   var color;
+
+  //   (repdata[ stateAbr[feature.G.statename] + feature.G.district]) ? (
+  //     color = (repdata[ stateAbr[feature.G.statename] + feature.G.district].party === 'Republican') ? 'red' : 'blue'
+  //   ) : (
+  //     color = 'gray'
+  //   )
+
+  //   return ({
+  //     fillColor: color,
+  //     strokeColor: color,
+  //     strokeWeight: 1
+  //   });
+  // });
+
+  map.data.loadGeoJson('cd113.json');
 
   map.data.setStyle(function(feature) {
     var color;
+//    console.log(stateFP[feature.G.STATEFP] + feature.G.CD113FP);
 
-    (repdata[ stateAbr[feature.G.statename] + feature.G.district]) ? (
-      color = (repdata[ stateAbr[feature.G.statename] + feature.G.district].party === 'Republican') ? 'red' : 'blue'
+    (repdata[ stateFP[feature.G.STATEFP] + feature.G.CD113FP]) ? (
+      color = (repdata[ stateFP[feature.G.STATEFP] + feature.G.CD113FP].party === 'Republican') ? 'red' : 'blue'
     ) : (
       color = 'gray'
     )
 
     return ({
       fillColor: color,
-      strokeColor: color,
-      strokeWeight: 1
+      strokeColor: 'white',
+      strokeWeight: 0.5
     });
   });
 
   map.data.addListener('click', function(event) {
-    console.log("District: " + event.feature.G.district);
-    console.log("State: " + event.feature.G.statename);
-    console.log("State Abbr: " + stateAbr[event.feature.G.statename]);
+    console.log("District: " + event.feature.G.CD113FP);
+    console.log("State: " + stateFP[event.feature.G.STATEFP]);
   });
 
 }
