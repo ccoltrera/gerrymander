@@ -32,6 +32,7 @@
   "devDependencies": {
     "browserify": "^11.0.1",
     "google-maps": "^3.1.0",
+    "jsonfile": "^2.2.1",
     "react": "^0.13.3",
     "react-gmaps": "^0.3.1",
     "reactify": "^1.1.1",
@@ -39,6 +40,6 @@
     "watchify": "^3.3.1"
   },
   "dependencies": {
-    "react-google-maps": "^2.0.3"
+    "express": "^4.13.3"
   }
 }
