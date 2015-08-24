@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify src/app.jsx -o build/bundle.js",
+    "build": "browserify src/app.jsx -o public/js/bundle.js",
     "watch": "watchify -o built/bundle.js -v -d js/app.jsx"
   },
   "browserify": {
