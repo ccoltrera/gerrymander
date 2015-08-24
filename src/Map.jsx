@@ -4,7 +4,6 @@ GoogleMapsLoader.KEY = 'AIzaSyDGaEYHC5Zu03udg2F_vYLvvL75H3zout8';
 
 var Map = React.createClass({
   google: null,
-  map: null,
   loadGoogleMapsAPI: function() {
     GoogleMapsLoader.load(function(google) {
       this.google = google;
