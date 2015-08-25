@@ -3,13 +3,10 @@
 var React = require('react');
 var HeaderContainer = require('./HeaderContainer.jsx');
 var Map = require('./Map.jsx');
-<<<<<<< HEAD
 var FooterContainer = require('./FooterContainer.jsx');
-=======
 var superagent = require('superagent');
 var GoogleMapsLoader = require('google-maps');
 GoogleMapsLoader.KEY = 'AIzaSyDGaEYHC5Zu03udg2F_vYLvvL75H3zout8';
->>>>>>> ddaad6949ff4ead0d01497ea2b62eb51ce6db191
 
 var MapContainer = React.createClass({
   loadGoogleMapsAPI: function() {
