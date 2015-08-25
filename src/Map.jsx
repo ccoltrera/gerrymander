@@ -43,11 +43,10 @@ var Map = React.createClass({
     map.data.setStyle(function(feature) {
       var color, fillOpacity;
       var repdata = this.props.repdata;
-      (repdata[ FIPS[feature.G.STATEFP] + feature.G.CD113FP]) ? (
-        color = (repdata[ FIPS[feature.G.STATEFP] + feature.G.CD113FP].party === 'Republican') ? 'red' : 'blue'
-      ) : (
-        color = 'gray'
-      );
+      var rep = repdata[ FIPS[feature.G.STATEFP] + feature.G.CD113FP];
+      color = (rep) ? (
+        (rep.party === 'Republican') ? 'red' : 'blue'
+      ) : 'gray' ;
 
       if (feature.getProperty('selected')) {
         color = 'white';
