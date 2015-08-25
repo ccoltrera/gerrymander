@@ -66,7 +66,7 @@ var Map = React.createClass({
     map.setOptions({styles: styles});
     map.data.loadGeoJson('cd113.json');
     map.data.setStyle(function(feature) {
-      var color;
+      var color, fillOpacity;
       var repdata = this.state.repdata;
       (repdata && repdata[ FIPS[feature.G.STATEFP] + feature.G.CD113FP]) ? (
         color = (repdata[ FIPS[feature.G.STATEFP] + feature.G.CD113FP].party === 'Republican') ? 'red' : 'blue'
@@ -74,9 +74,13 @@ var Map = React.createClass({
         color = 'gray'
       );
 
-      if (feature.getProperty('selected')) color = 'white';
+      if (feature.getProperty('selected')) {
+        color = 'white';
+        fillOpacity = 0.75;
+      }
 
       return ({
+        fillOpacity: fillOpacity,
         fillColor: color,
         strokeColor: 'white',
         strokeWeight: 0.5
@@ -91,6 +95,13 @@ var Map = React.createClass({
       console.log("District: " + event.feature.G.CD113FP);
       console.log("State: " + FIPS[event.feature.G.STATEFP]);
     }.bind(this));
+    map.data.addListener('mouseover', function(event) {
+      map.data.revertStyle();
+      map.data.overrideStyle(event.feature, {strokeWeight: 2});
+    });
+    map.data.addListener('mouseout', function(event) {
+      map.data.revertStyle();
+    });
     this.setState({
       map: map
     });

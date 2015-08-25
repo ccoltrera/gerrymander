@@ -6,7 +6,7 @@ var Map = require('./Map.jsx');
 var MapContainer = React.createClass({
   getInitialState: function() {
     return {
-      zoom: 4,
+      zoom: 5,
       center: {lat: 40, lng: -95}
     }
   },
