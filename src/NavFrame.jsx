@@ -2,29 +2,23 @@
 var React = require('react');
 
 var NavFrame = React.createClass({
+  buttons: ['INFO', 'MONEY', 'EDUCATION', 'PEOPLE', 'ELECTIONS'],
+  clickHandle: function(i) {
+    this.props.selectInfoType(this.buttons[i]);
+  },
+
   render: function() {
     return (
       <footer>
         <ul id="mainMenue" role="navigation">
-          <li>
-            <a><span className="text">PEOPE</span>
-            <span className="icon"></span></a>
-          </li>
-          <li>
-            <a><span className="text">JOBS</span>
-            <span className="icon"></span></a>
-          </li>
-          <li>
-            <a><span className="text">HOUSING</span>
-            <span className="icon"></span></a>
-          </li>
-          <li>
-            <a><span className="text">ECONOMIC</span>
-            <span className="icon"></span></a></li>
-          <li>
-            <a><span className="text">EDUCATION</span>
-            <span className="icon"></span></a>
-          </li>
+          {this.buttons.map(function(button, i) {
+            return (
+              <li onClick={this.clickHandle.bind(this, i)} key={i}>
+                <span className="text">{button}</span>
+                <span className={"icon " + button}></span>
+              </li>
+            );
+          }, this)}
         </ul>
       </footer>
     );
