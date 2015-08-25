@@ -1,7 +1,10 @@
 "use strict";
 
 var React = require('react');
+var HeaderContainer = require('./HeaderContainer.jsx');
+var SideNavContainer = require('./SideNavContainer.jsx');
 var Map = require('./Map.jsx');
+var FooterContainer = require('./FooterContainer.jsx');
 
 var MapContainer = React.createClass({
   getInitialState: function() {
@@ -12,7 +15,12 @@ var MapContainer = React.createClass({
   },
   render: function() {
     return (
-      <Map {...this.state}/>
+      <div className="wrapper">
+        <HeaderContainer />
+        <SideNavContainer />
+        <Map {...this.state}/>
+        <FooterContainer />
+      </div>
     );
   }
 });
