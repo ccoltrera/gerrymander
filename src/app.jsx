@@ -2,7 +2,6 @@
 
 var React = require('react');
 var HeaderContainer = require('./HeaderContainer.jsx');
-var SideNavContainer = require('./SideNavContainer.jsx');
 var Map = require('./Map.jsx');
 var FooterContainer = require('./FooterContainer.jsx');
 
@@ -17,8 +16,7 @@ var MapContainer = React.createClass({
     return (
       <div className="wrapper">
         <HeaderContainer />
-        <SideNavContainer />
-        <Map {...this.state}/>
+        <Map {...this.state} />
         <FooterContainer />
       </div>
     );

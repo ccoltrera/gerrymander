@@ -1,6 +1,7 @@
 var React = require('react');
 var superagent = require('superagent');
 var GoogleMapsLoader = require('google-maps');
+var RightSideInfoContainer = require('./RightSideInfoContainer.jsx');
 GoogleMapsLoader.KEY = 'AIzaSyDGaEYHC5Zu03udg2F_vYLvvL75H3zout8';
 var FIPS = require('../data/FIPS');
 
@@ -117,7 +118,12 @@ var Map = React.createClass({
     this.loadRepData();
   },
   render: function() {
-    return <div id="map" ref="map"></div>;
+    return (
+      <main>
+        <div id="map" ref="map"></div>
+        <RightSideInfoContainer />
+      </main>
+    );
   }
 });
 

@@ -23539,8 +23539,6 @@ var HeaderContainer = React.createClass({displayName: "HeaderContainer",
     // check back here for better transitions and mask http://callmenick.com/post/slide-and-push-menus-with-css3-transitions
     return (
       React.createElement("header", null, 
-        React.createElement("label", {htmlFor: "menu"}, "☰"), 
-        React.createElement("input", {type: "checkbox", id: "menu", role: "button"}), 
         React.createElement("h1", null, "Gerrymander")
       )
     );
@@ -23553,6 +23551,7 @@ module.exports = HeaderContainer;
 var React = require('react');
 var superagent = require('superagent');
 var GoogleMapsLoader = require('google-maps');
+var RightSideInfoContainer = require('./RightSideInfoContainer.jsx');
 GoogleMapsLoader.KEY = 'AIzaSyDGaEYHC5Zu03udg2F_vYLvvL75H3zout8';
 var FIPS = require('../data/FIPS');
 
@@ -23618,7 +23617,7 @@ var Map = React.createClass({displayName: "Map",
     map.setOptions({styles: styles});
     map.data.loadGeoJson('cd113.json');
     map.data.setStyle(function(feature) {
-      var color;
+      var color, fillOpacity;
       var repdata = this.state.repdata;
       (repdata && repdata[ FIPS[feature.G.STATEFP] + feature.G.CD113FP]) ? (
         color = (repdata[ FIPS[feature.G.STATEFP] + feature.G.CD113FP].party === 'Republican') ? 'red' : 'blue'
@@ -23626,15 +23625,33 @@ var Map = React.createClass({displayName: "Map",
         color = 'gray'
       );
 
+      if (feature.getProperty('selected')) {
+        color = 'white';
+        fillOpacity = 0.75;
+      }
+
       return ({
+        fillOpacity: fillOpacity,
         fillColor: color,
         strokeColor: 'white',
         strokeWeight: 0.5
       });
     }.bind(this));
     map.data.addListener('click', function(event) {
+      if (this.state.selected) this.state.selected.setProperty('selected', false);
+      event.feature.setProperty('selected', true);
+      this.setState({
+        selected: event.feature
+      });
       console.log("District: " + event.feature.G.CD113FP);
       console.log("State: " + FIPS[event.feature.G.STATEFP]);
+    }.bind(this));
+    map.data.addListener('mouseover', function(event) {
+      map.data.revertStyle();
+      map.data.overrideStyle(event.feature, {strokeWeight: 2});
+    });
+    map.data.addListener('mouseout', function(event) {
+      map.data.revertStyle();
     });
     this.setState({
       map: map
@@ -23651,43 +23668,44 @@ var Map = React.createClass({displayName: "Map",
     this.loadRepData();
   },
   render: function() {
-    return React.createElement("div", {id: "map", ref: "map"});
-  }
-});
-
-module.exports = Map;
-
-},{"../data/FIPS":1,"google-maps":3,"react":176,"superagent":177}],183:[function(require,module,exports){
-'use strict';
-var React = require('react');
-
-var SideNavContainer = React.createClass({displayName: "SideNavContainer",
-  render: function() {
     return (
-      React.createElement("nav", {id: "nav"}, 
-        React.createElement("h3", null, "Nav header"), 
-        React.createElement("ul", null, 
-          React.createElement("li", null, "test nav"), 
-          React.createElement("li", null, "test nav"), 
-          React.createElement("li", null, "test nav"), 
-          React.createElement("li", null, "test nav"), 
-          React.createElement("li", null, "test nav"), 
-          React.createElement("li", null, "test nav"), 
-          React.createElement("li", null, "test nav")
-        )
+      React.createElement("main", null, 
+        React.createElement("div", {id: "map", ref: "map"}), 
+        React.createElement(RightSideInfoContainer, null)
       )
     );
   }
 });
 
-module.exports = SideNavContainer;
+module.exports = Map;
+
+},{"../data/FIPS":1,"./RightSideInfoContainer.jsx":183,"google-maps":3,"react":176,"superagent":177}],183:[function(require,module,exports){
+'use strict';
+var React = require('react');
+
+var RightSideInfoContainer = React.createClass({displayName: "RightSideInfoContainer",
+  render: function() {
+    return (
+      React.createElement("aside", {className: "right-side-info"}, 
+        React.createElement("p", null, "This pannel shows up when a district is clicked"), 
+        React.createElement("p", null, "Add close button"), 
+        React.createElement("button", null, "PEOPLE"), React.createElement("br", null), 
+        React.createElement("button", null, "JOBS"), React.createElement("br", null), 
+        React.createElement("button", null, "HOUSING"), React.createElement("br", null), 
+        React.createElement("button", null, "ECONOMIC"), React.createElement("br", null), 
+        React.createElement("button", null, "EDUCATION"), React.createElement("br", null)
+      )
+    );
+  }
+});
+
+module.exports = RightSideInfoContainer;
 
 },{"react":176}],184:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
 var HeaderContainer = require('./HeaderContainer.jsx');
-var SideNavContainer = require('./SideNavContainer.jsx');
 var Map = require('./Map.jsx');
 var FooterContainer = require('./FooterContainer.jsx');
 
@@ -23702,7 +23720,6 @@ var MapContainer = React.createClass({displayName: "MapContainer",
     return (
       React.createElement("div", {className: "wrapper"}, 
         React.createElement(HeaderContainer, null), 
-        React.createElement(SideNavContainer, null), 
         React.createElement(Map, React.__spread({},  this.state)), 
         React.createElement(FooterContainer, null)
       )
@@ -23712,7 +23729,7 @@ var MapContainer = React.createClass({displayName: "MapContainer",
 
 React.render(React.createElement(MapContainer, null), document.body);
 
-},{"./FooterContainer.jsx":180,"./HeaderContainer.jsx":181,"./Map.jsx":182,"./SideNavContainer.jsx":183,"react":176}],185:[function(require,module,exports){
+},{"./FooterContainer.jsx":180,"./HeaderContainer.jsx":181,"./Map.jsx":182,"react":176}],185:[function(require,module,exports){
 'use strict';
 var React = require('react/addons');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
