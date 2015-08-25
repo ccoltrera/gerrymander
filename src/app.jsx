@@ -3,7 +3,6 @@
 var React = require('react');
 var HeaderContainer = require('./HeaderContainer.jsx');
 var Map = require('./Map.jsx');
-var FooterContainer = require('./FooterContainer.jsx');
 var superagent = require('superagent');
 var GoogleMapsLoader = require('google-maps');
 GoogleMapsLoader.KEY = 'AIzaSyDGaEYHC5Zu03udg2F_vYLvvL75H3zout8';
@@ -54,7 +53,6 @@ var MapContainer = React.createClass({
       <div className="wrapper">
         <HeaderContainer />
         {this.state.google && this.state.repdata ? mapComponent : loadingDisplay}
-        <FooterContainer />
       </div>
     );
 
