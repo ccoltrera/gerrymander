@@ -1,8 +1,5 @@
 var React = require('react');
-var superagent = require('superagent');
-var GoogleMapsLoader = require('google-maps');
 var RightSideInfoContainer = require('./RightSideInfoContainer.jsx');
-GoogleMapsLoader.KEY = 'AIzaSyDGaEYHC5Zu03udg2F_vYLvvL75H3zout8';
 var FIPS = require('../data/FIPS');
 
 var styles = [
@@ -37,39 +34,17 @@ var styles = [
 ];
 
 var Map = React.createClass({
-  google: null,
-  loadGoogleMapsAPI: function() {
-    GoogleMapsLoader.load(function(google) {
-      this.google = google;
-      this.loadMap();
-    }.bind(this));
-  },
-  loadRepData: function() {
-    superagent
-      .get('https://www.govtrack.us/api/v2/role?current=true&role_type=representative&limit=500')
-      .end(function(err, res) {
-        var output = {};
-        for (var i=0; i<res.body.objects.length; i++) {
-          if (String(res.body.objects[i].district).length == 1) {
-            output[res.body.objects[i].state + '0' + res.body.objects[i].district] = res.body.objects[i];
-          } else {
-            output[res.body.objects[i].state + res.body.objects[i].district] = res.body.objects[i];
-          }
-        }
-        this.setState({
-          repdata: output
-        });
-      }.bind(this));
-  },
+
   loadMap: function() {
+
     var el = React.findDOMNode(this.refs.map);
-    var map = new this.google.maps.Map(el, this.props);
+    var map = new this.props.google.maps.Map(el, this.props.mapDefaults);
     map.setOptions({styles: styles});
     map.data.loadGeoJson('cd113.json');
     map.data.setStyle(function(feature) {
       var color, fillOpacity;
-      var repdata = this.state.repdata;
-      (repdata && repdata[ FIPS[feature.G.STATEFP] + feature.G.CD113FP]) ? (
+      var repdata = this.props.repdata;
+      (repdata[ FIPS[feature.G.STATEFP] + feature.G.CD113FP]) ? (
         color = (repdata[ FIPS[feature.G.STATEFP] + feature.G.CD113FP].party === 'Republican') ? 'red' : 'blue'
       ) : (
         color = 'gray'
@@ -110,12 +85,10 @@ var Map = React.createClass({
   getInitialState: function() {
     return {
       map: null,
-      repdata: {}
     };
   },
-  componentWillMount: function() {
-    this.loadGoogleMapsAPI();
-    this.loadRepData();
+  componentDidMount: function() {
+    this.loadMap();
   },
   render: function() {
     return (
