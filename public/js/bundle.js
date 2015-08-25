@@ -21425,43 +21425,6 @@ module.exports = function(arr, fn, initial){
 'use strict';
 var React = require('react');
 
-var FooterContainer = React.createClass({displayName: "FooterContainer",
-
-  render: function() {
-    return (
-      React.createElement("footer", null, 
-        React.createElement("ul", {id: "mainMenue", role: "navigation"}, 
-          React.createElement("li", null, 
-            React.createElement("a", {onclick: this.props.selectInfo(str)}, React.createElement("span", {className: "text"}, "PEOPE"), 
-            React.createElement("span", {className: "icon"}))
-          ), 
-          React.createElement("li", null, 
-            React.createElement("a", {onclick: this.openModal}, React.createElement("span", {className: "text"}, "JOBS"), 
-            React.createElement("span", {className: "icon"}))
-          ), 
-          React.createElement("li", null, 
-            React.createElement("a", {onclick: this.openModal}, React.createElement("span", {className: "text"}, "HOUSING"), 
-            React.createElement("span", {className: "icon"}))
-          ), 
-          React.createElement("li", null, 
-            React.createElement("a", {onclick: this.openModal}, React.createElement("span", {className: "text"}, "ECONOMIC"), 
-            React.createElement("span", {className: "icon"}))), 
-          React.createElement("li", null, 
-            React.createElement("a", {onclick: this.openModal}, React.createElement("span", {className: "text"}, "EDUCATION"), 
-            React.createElement("span", {className: "icon"}))
-          )
-        )
-      )
-    );
-  }
-});
-
-module.exports = FooterContainer;
-
-},{"react":158}],163:[function(require,module,exports){
-'use strict';
-var React = require('react');
-
 var HeaderContainer = React.createClass({displayName: "HeaderContainer",
   render: function() {
     // check back here for better transitions and mask http://callmenick.com/post/slide-and-push-menus-with-css3-transitions
@@ -21475,7 +21438,7 @@ var HeaderContainer = React.createClass({displayName: "HeaderContainer",
 
 module.exports = HeaderContainer;
 
-},{"react":158}],164:[function(require,module,exports){
+},{"react":158}],163:[function(require,module,exports){
 'use strict';
 var React = require('react');
 
@@ -21497,10 +21460,10 @@ var InfoDisplay = React.createClass({displayName: "InfoDisplay",
 
 module.exports = InfoDisplay;
 
-},{"react":158}],165:[function(require,module,exports){
+},{"react":158}],164:[function(require,module,exports){
 var React = require('react');
-var RightSideInfoContainer = require('./InfoDisplay.jsx');
-var FooterContainer = require('./FooterContainer.jsx');
+var InfoDisplay = require('./InfoDisplay.jsx');
+var NavFrame = require('./NavFrame.jsx');
 var FIPS = require('../data/FIPS');
 
 var styles = [
@@ -21595,7 +21558,7 @@ var Map = React.createClass({displayName: "Map",
       React.createElement("main", null, 
         React.createElement("div", {id: "map", ref: "map"}), 
         React.createElement(InfoDisplay, null), 
-        React.createElement(FooterContainer, null)
+        React.createElement(NavFrame, null)
       )
     );
   }
@@ -21603,7 +21566,44 @@ var Map = React.createClass({displayName: "Map",
 
 module.exports = Map;
 
-},{"../data/FIPS":1,"./FooterContainer.jsx":162,"./InfoDisplay.jsx":164,"react":158}],166:[function(require,module,exports){
+},{"../data/FIPS":1,"./InfoDisplay.jsx":163,"./NavFrame.jsx":165,"react":158}],165:[function(require,module,exports){
+'use strict';
+var React = require('react');
+
+var FooterContainer = React.createClass({displayName: "FooterContainer",
+
+  render: function() {
+    return (
+      React.createElement("footer", null, 
+        React.createElement("ul", {id: "mainMenue", role: "navigation"}, 
+          React.createElement("li", null, 
+            React.createElement("a", {onclick: this.props.selectInfo(str)}, React.createElement("span", {className: "text"}, "PEOPE"), 
+            React.createElement("span", {className: "icon"}))
+          ), 
+          React.createElement("li", null, 
+            React.createElement("a", {onclick: this.openModal}, React.createElement("span", {className: "text"}, "JOBS"), 
+            React.createElement("span", {className: "icon"}))
+          ), 
+          React.createElement("li", null, 
+            React.createElement("a", {onclick: this.openModal}, React.createElement("span", {className: "text"}, "HOUSING"), 
+            React.createElement("span", {className: "icon"}))
+          ), 
+          React.createElement("li", null, 
+            React.createElement("a", {onclick: this.openModal}, React.createElement("span", {className: "text"}, "ECONOMIC"), 
+            React.createElement("span", {className: "icon"}))), 
+          React.createElement("li", null, 
+            React.createElement("a", {onclick: this.openModal}, React.createElement("span", {className: "text"}, "EDUCATION"), 
+            React.createElement("span", {className: "icon"}))
+          )
+        )
+      )
+    );
+  }
+});
+
+module.exports = FooterContainer;
+
+},{"react":158}],166:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -21667,4 +21667,4 @@ var MapContainer = React.createClass({displayName: "MapContainer",
 
 React.render(React.createElement(MapContainer, null), document.body);
 
-},{"./HeaderContainer.jsx":163,"./Map.jsx":165,"google-maps":3,"react":158,"superagent":159}]},{},[166]);
+},{"./HeaderContainer.jsx":162,"./Map.jsx":164,"google-maps":3,"react":158,"superagent":159}]},{},[166]);
