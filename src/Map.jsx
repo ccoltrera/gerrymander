@@ -74,6 +74,8 @@ var Map = React.createClass({
         color = 'gray'
       );
 
+      if (feature.getProperty('selected')) color = 'white';
+
       return ({
         fillColor: color,
         strokeColor: 'white',
@@ -81,9 +83,14 @@ var Map = React.createClass({
       });
     }.bind(this));
     map.data.addListener('click', function(event) {
+      if (this.state.selected) this.state.selected.setProperty('selected', false);
+      event.feature.setProperty('selected', true);
+      this.setState({
+        selected: event.feature
+      });
       console.log("District: " + event.feature.G.CD113FP);
       console.log("State: " + FIPS[event.feature.G.STATEFP]);
-    });
+    }.bind(this));
     this.setState({
       map: map
     });
