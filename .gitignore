@@ -1,3 +1,4 @@
 node_modules
 credentials.sh
 public/js/bundle.js
+npm-debug.log
