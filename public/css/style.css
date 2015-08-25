@@ -1,0 +1,90 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #f0eceb;
+  font-family: 'Franklin Gothic Medium','Franklin Gothic','ITC Franklin Gothic',Arial,sans-serif;
+}
+* {
+  margin: 0;
+  color: #283018;
+}
+.wrapper {
+  height: 100%;
+}
+#map {
+  height: 100%;
+  width: 70%;
+  float: left;
+}
+header {
+  overflow: auto;
+  position: relative;
+  text-align: center;
+  height: 48px;
+  border-bottom: solid 1px #283018;
+}
+header label {
+  font-size: 35px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+header h1 {
+  margin: auto;
+  margin-top: 7px;
+  font-weight: 100;
+}
+main {
+  height: calc(100% - 163px);
+  width: 100%;
+}
+aside {
+  float: right;
+  width: 30%;
+}
+
+footer {
+  height: 115px;
+}
+footer ul {
+  list-style: none;
+  width: 100%;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  display: flex;
+  felex-direction: row;
+}
+footer li {
+  text-align: center;
+  flex-grow: 1;
+}
+footer li span.text {
+  display: block;
+  padding: 13px 0 15px;
+}
+footer li span.icon {
+  display: block;
+  margin: auto;
+  height: 60px;
+  width: 60px;
+  background-color: #e6e2e1;
+}
+.modal-anim-enter {
+    opacity: 0.00;
+    transform: scale(0.7);
+    transition: all 0.2s;
+}
+.modal-anim-enter.modal-anim-enter-active {
+    opacity: 1;
+    transform: scale(1);
+}
+.modal-anim-leave {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.2s;
+}
+.modal-anim-leave.modal-anim-leave-active {
+    opacity: 0.00;
+    transform: scale(0.7);
+}
