@@ -36,6 +36,12 @@ var styles = [
 
 var Map = React.createClass({
 
+  selectInfoType: function(infoType) {
+    this.setState({
+      infoType: infoType
+    });
+  },
+
   loadMap: function() {
 
     var el = React.findDOMNode(this.refs.map);
@@ -63,13 +69,14 @@ var Map = React.createClass({
       });
     }.bind(this));
     map.data.addListener('click', function(event) {
-      if (this.state.selected) this.state.selected.setProperty('selected', false);
+      if (this.state.district) this.state.district.setProperty('selected', false);
       event.feature.setProperty('selected', true);
       this.setState({
-        selected: event.feature
+        district: event.feature.G
       });
-      console.log("District: " + event.feature.G.CD113FP);
-      console.log("State: " + FIPS[event.feature.G.STATEFP]);
+      console.log(event.feature);
+      // console.log("District: " + event.feature.G.CD113FP);
+      // console.log("State: " + FIPS[event.feature.G.STATEFP]);
     }.bind(this));
     map.data.addListener('mouseover', function(event) {
       map.data.revertStyle();
@@ -85,6 +92,8 @@ var Map = React.createClass({
   getInitialState: function() {
     return {
       map: null,
+      district: null,
+      infoType: ""
     };
   },
   componentDidMount: function() {
@@ -94,8 +103,8 @@ var Map = React.createClass({
     return (
       <main>
         <div id="map" ref="map"></div>
-        <InfoDisplay />
-        <NavFrame />
+        <InfoDisplay district={this.state.district} infoType={this.state.infoType}/>
+        <NavFrame selectInfoType={this.selectInfoType}/>
       </main>
     );
   }
