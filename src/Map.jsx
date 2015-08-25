@@ -1,4 +1,5 @@
 var React = require('react');
+var RightSideInfoContainer = require('./RightSideInfoContainer.jsx');
 var FIPS = require('../data/FIPS');
 
 var styles = [
@@ -89,7 +90,12 @@ var Map = React.createClass({
     this.loadMap();
   },
   render: function() {
-    return <div id="map" ref="map"></div>;
+    return (
+      <main>
+        <div id="map" ref="map"></div>
+        <RightSideInfoContainer />
+      </main>
+    );
   }
 });
 
