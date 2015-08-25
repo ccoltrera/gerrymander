@@ -23549,10 +23549,7 @@ module.exports = HeaderContainer;
 
 },{"react":176}],182:[function(require,module,exports){
 var React = require('react');
-var superagent = require('superagent');
-var GoogleMapsLoader = require('google-maps');
 var RightSideInfoContainer = require('./RightSideInfoContainer.jsx');
-GoogleMapsLoader.KEY = 'AIzaSyDGaEYHC5Zu03udg2F_vYLvvL75H3zout8';
 var FIPS = require('../data/FIPS');
 
 var styles = [
@@ -23587,39 +23584,17 @@ var styles = [
 ];
 
 var Map = React.createClass({displayName: "Map",
-  google: null,
-  loadGoogleMapsAPI: function() {
-    GoogleMapsLoader.load(function(google) {
-      this.google = google;
-      this.loadMap();
-    }.bind(this));
-  },
-  loadRepData: function() {
-    superagent
-      .get('https://www.govtrack.us/api/v2/role?current=true&role_type=representative&limit=500')
-      .end(function(err, res) {
-        var output = {};
-        for (var i=0; i<res.body.objects.length; i++) {
-          if (String(res.body.objects[i].district).length == 1) {
-            output[res.body.objects[i].state + '0' + res.body.objects[i].district] = res.body.objects[i];
-          } else {
-            output[res.body.objects[i].state + res.body.objects[i].district] = res.body.objects[i];
-          }
-        }
-        this.setState({
-          repdata: output
-        });
-      }.bind(this));
-  },
+
   loadMap: function() {
+
     var el = React.findDOMNode(this.refs.map);
-    var map = new this.google.maps.Map(el, this.props);
+    var map = new this.props.google.maps.Map(el, this.props.mapDefaults);
     map.setOptions({styles: styles});
     map.data.loadGeoJson('cd113.json');
     map.data.setStyle(function(feature) {
       var color, fillOpacity;
-      var repdata = this.state.repdata;
-      (repdata && repdata[ FIPS[feature.G.STATEFP] + feature.G.CD113FP]) ? (
+      var repdata = this.props.repdata;
+      (repdata[ FIPS[feature.G.STATEFP] + feature.G.CD113FP]) ? (
         color = (repdata[ FIPS[feature.G.STATEFP] + feature.G.CD113FP].party === 'Republican') ? 'red' : 'blue'
       ) : (
         color = 'gray'
@@ -23660,12 +23635,10 @@ var Map = React.createClass({displayName: "Map",
   getInitialState: function() {
     return {
       map: null,
-      repdata: {}
     };
   },
-  componentWillMount: function() {
-    this.loadGoogleMapsAPI();
-    this.loadRepData();
+  componentDidMount: function() {
+    this.loadMap();
   },
   render: function() {
     return (
@@ -23679,7 +23652,7 @@ var Map = React.createClass({displayName: "Map",
 
 module.exports = Map;
 
-},{"../data/FIPS":1,"./RightSideInfoContainer.jsx":183,"google-maps":3,"react":176,"superagent":177}],183:[function(require,module,exports){
+},{"../data/FIPS":1,"./RightSideInfoContainer.jsx":183,"react":176}],183:[function(require,module,exports){
 'use strict';
 var React = require('react');
 
@@ -23708,28 +23681,66 @@ var React = require('react');
 var HeaderContainer = require('./HeaderContainer.jsx');
 var Map = require('./Map.jsx');
 var FooterContainer = require('./FooterContainer.jsx');
+var superagent = require('superagent');
+var GoogleMapsLoader = require('google-maps');
+GoogleMapsLoader.KEY = 'AIzaSyDGaEYHC5Zu03udg2F_vYLvvL75H3zout8';
 
 var MapContainer = React.createClass({displayName: "MapContainer",
+  loadGoogleMapsAPI: function() {
+    GoogleMapsLoader.load(function(google) {
+      this.setState({
+        google: google
+      });
+    }.bind(this));
+  },
+  loadRepData: function() {
+    superagent
+      .get('https://www.govtrack.us/api/v2/role?current=true&role_type=representative&limit=500')
+      .end(function(err, res) {
+        var output = {};
+        for (var i=0; i<res.body.objects.length; i++) {
+          if (String(res.body.objects[i].district).length == 1) {
+            output[res.body.objects[i].state + '0' + res.body.objects[i].district] = res.body.objects[i];
+          } else {
+            output[res.body.objects[i].state + res.body.objects[i].district] = res.body.objects[i];
+          }
+        }
+        this.setState({
+          repdata: output
+        });
+      }.bind(this));
+  },
   getInitialState: function() {
     return {
-      zoom: 5,
-      center: {lat: 40, lng: -95}
+      google: null,
+      repdata: null,
+      mapDefaults: {
+        zoom: 5,
+        center: {lat: 40, lng: -95}
+      }
     }
   },
+  componentDidMount: function() {
+    this.loadGoogleMapsAPI();
+    this.loadRepData();
+  },
   render: function() {
+    var mapComponent = React.createElement(Map, React.__spread({},  this.state));
+    var loadingDisplay = React.createElement("p", null, "loading map...");
     return (
       React.createElement("div", {className: "wrapper"}, 
         React.createElement(HeaderContainer, null), 
-        React.createElement(Map, React.__spread({},  this.state)), 
+        this.state.google && this.state.repdata ? mapComponent : loadingDisplay, 
         React.createElement(FooterContainer, null)
       )
     );
+
   }
 });
 
 React.render(React.createElement(MapContainer, null), document.body);
 
-},{"./FooterContainer.jsx":180,"./HeaderContainer.jsx":181,"./Map.jsx":182,"react":176}],185:[function(require,module,exports){
+},{"./FooterContainer.jsx":180,"./HeaderContainer.jsx":181,"./Map.jsx":182,"google-maps":3,"react":176,"superagent":177}],185:[function(require,module,exports){
 'use strict';
 var React = require('react/addons');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;

@@ -48,19 +48,16 @@ var MapContainer = React.createClass({
     this.loadRepData();
   },
   render: function() {
-<<<<<<< HEAD
+    var mapComponent = <Map {...this.state}/>;
+    var loadingDisplay = <p>loading map...</p>;
     return (
       <div className="wrapper">
         <HeaderContainer />
-        <Map {...this.state} />
+        {this.state.google && this.state.repdata ? mapComponent : loadingDisplay}
         <FooterContainer />
       </div>
     );
-=======
-    var mapComponent = <Map {...this.state}/>;
-    var loadingDisplay = <p>loading map...</p>;
-    return this.state.google && this.state.repdata ? mapComponent : loadingDisplay;
->>>>>>> ddaad6949ff4ead0d01497ea2b62eb51ce6db191
+
   }
 });
 
