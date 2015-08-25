@@ -5,6 +5,9 @@ html, body {
   background: #f0eceb;
   font-family: 'Franklin Gothic Medium','Franklin Gothic','ITC Franklin Gothic',Arial,sans-serif;
 }
+body.nav-frame-active {
+  overflow: hidden;
+}
 * {
   margin: 0;
   color: #283018;
@@ -42,6 +45,10 @@ main {
 aside {
   float: right;
   width: 30%;
+  /* sliding */
+  /*position: fixed;*/
+  z-index: 200;
+  transition: transform 0.3s;
 }
 
 footer {
@@ -69,22 +76,4 @@ footer li span.icon {
   height: 60px;
   width: 60px;
   background-color: #e6e2e1;
-}
-.modal-anim-enter {
-    opacity: 0.00;
-    transform: scale(0.7);
-    transition: all 0.2s;
-}
-.modal-anim-enter.modal-anim-enter-active {
-    opacity: 1;
-    transform: scale(1);
-}
-.modal-anim-leave {
-    opacity: 1;
-    transform: scale(1);
-    transition: all 0.2s;
-}
-.modal-anim-leave.modal-anim-leave-active {
-    opacity: 0.00;
-    transform: scale(0.7);
 }
