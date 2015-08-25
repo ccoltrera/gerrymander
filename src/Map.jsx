@@ -1,6 +1,6 @@
 var React = require('react');
-var RightSideInfoContainer = require('./InfoDisplay.jsx');
-var FooterContainer = require('./FooterContainer.jsx');
+var InfoDisplay = require('./InfoDisplay.jsx');
+var NavFrame = require('./NavFrame.jsx');
 var FIPS = require('../data/FIPS');
 
 var styles = [
@@ -95,7 +95,7 @@ var Map = React.createClass({
       <main>
         <div id="map" ref="map"></div>
         <InfoDisplay />
-        <FooterContainer />
+        <NavFrame />
       </main>
     );
   }
