@@ -72,9 +72,8 @@ var Map = React.createClass({
       if (this.state.district) this.state.district.setProperty('selected', false);
       event.feature.setProperty('selected', true);
       this.setState({
-        district: event.feature.G
+        district: event.feature
       });
-      console.log(event.feature);
       // console.log("District: " + event.feature.G.CD113FP);
       // console.log("State: " + FIPS[event.feature.G.STATEFP]);
     }.bind(this));
