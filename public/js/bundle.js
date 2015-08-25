@@ -21570,14 +21570,13 @@ module.exports = Map;
 'use strict';
 var React = require('react');
 
-var FooterContainer = React.createClass({displayName: "FooterContainer",
-
+var NavFrame = React.createClass({displayName: "NavFrame",
   render: function() {
     return (
       React.createElement("footer", null, 
         React.createElement("ul", {id: "mainMenue", role: "navigation"}, 
           React.createElement("li", null, 
-            React.createElement("a", {onclick: this.props.selectInfo(str)}, React.createElement("span", {className: "text"}, "PEOPE"), 
+            React.createElement("a", null, React.createElement("span", {className: "text"}, "PEOPE"), 
             React.createElement("span", {className: "icon"}))
           ), 
           React.createElement("li", null, 
@@ -21601,7 +21600,7 @@ var FooterContainer = React.createClass({displayName: "FooterContainer",
   }
 });
 
-module.exports = FooterContainer;
+module.exports = NavFrame;
 
 },{"react":158}],166:[function(require,module,exports){
 "use strict";

@@ -7,22 +7,22 @@ var NavFrame = React.createClass({
       <footer>
         <ul id="mainMenue" role="navigation">
           <li>
-            <a onclick={this.props.selectInfo(str)}><span className="text">PEOPE</span>
+            <a><span className="text">PEOPE</span>
             <span className="icon"></span></a>
           </li>
           <li>
-            <a onclick={this.openModal}><span className="text">JOBS</span>
+            <a><span className="text">JOBS</span>
             <span className="icon"></span></a>
           </li>
           <li>
-            <a onclick={this.openModal}><span className="text">HOUSING</span>
+            <a><span className="text">HOUSING</span>
             <span className="icon"></span></a>
           </li>
           <li>
-            <a onclick={this.openModal}><span className="text">ECONOMIC</span>
+            <a><span className="text">ECONOMIC</span>
             <span className="icon"></span></a></li>
           <li>
-            <a onclick={this.openModal}><span className="text">EDUCATION</span>
+            <a><span className="text">EDUCATION</span>
             <span className="icon"></span></a>
           </li>
         </ul>
