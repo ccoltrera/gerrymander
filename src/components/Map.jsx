@@ -1,5 +1,5 @@
 var React = require('react');
-var InfoDisplay = require('./InfoDisplay.jsx');
+var InfoFrame = require('./InfoFrame.jsx');
 var NavFrame = require('./NavFrame.jsx');
 var FIPS = require('../data/FIPS');
 
@@ -102,7 +102,7 @@ var Map = React.createClass({
     return (
       <main>
         <div id="map" ref="map"></div>
-        <InfoDisplay district={this.state.district} infoType={this.state.infoType}/>
+        <InfoFrame district={this.state.district} infoType={this.state.infoType}/>
         <NavFrame selectInfoType={this.selectInfoType}/>
       </main>
     );

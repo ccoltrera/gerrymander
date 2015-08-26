@@ -57,7 +57,7 @@ var statesByFIPS = require('../data/statesByFIPS');
 
 */
 
-var InfoDisplay = React.createClass({
+var InfoFrame = React.createClass({
   getInitialState: function() {
     return {
       data: null
@@ -73,4 +73,4 @@ var InfoDisplay = React.createClass({
   }
 });
 
-module.exports = InfoDisplay;
+module.exports = InfoFrame;
