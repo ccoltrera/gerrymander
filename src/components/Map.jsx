@@ -99,6 +99,7 @@ var Map = React.createClass({
     this.loadMap();
   },
   render: function() {
+    var infoFrame = this.state.district && this.state.infoType
     return (
       <main>
         <div id="map" ref="map"></div>

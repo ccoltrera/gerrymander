@@ -1,74 +1,51 @@
 'use strict';
 var React = require('react');
 var censusData = require('../util/cen-rep-rep');
-
 var data = ['INFO', 'MONEY', 'EDUCATION', 'PEOPLE', 'ELECTIONS'];
 var statesByFIPS = require('../data/statesByFIPS');
-
-/*
-{
-  INFO: {
-    state: statesByFIPS[this.props.district.G.STATEFP],
-    districtNum: this.props.district.G.NAMELSAD,
-    currentRep: 'your mom',
-    whenDrawn: '2010 or so, I guess',
-    whoDrew: 'some jerkfaces'
-  },
-  MONEY: {
-    district: {
-      incomeByHousehold: getCDReport('hh_income'),
-      incomePerCapita: getCDReport('pc_income'),
-      incomeByHouseholdMedian: getCDReport('median_hh_income'),
-      publicAssistance: getCDReport('pub_assist')
-    },
-    state: {
-      incomeByHousehold: getStateReport('hh_income'),
-      incomePerCapita: getStateReport('pc_income'),
-      incomeByHouseholdMedian: getStateReport('median_hh_income'),
-      publicAssistance: getStateReport('pub_assist')
-    }
-  },
-  EDUCATION: {
-    district: {
-      attainments: getCDReport('ed_attain'),
-      languages: getCDReport('lang_spoken')
-    },
-    state: {
-      attainments: getStateReport('ed_attain'),
-      languages: getStateReport('lang_spoken')
-    }
-  },
-  PEOPLE: {
-    district: {
-      populationTotal: getCDReport('total_pop'),
-      populationDensity: {total/area},
-      ethnicity: getCDReport('race')
-    },
-    state: {
-      populationTotal: getCDReport('total_pop'),
-      populationDensity: {total/area},
-      ethnicity: getCDReport('race')
-    }
-  },
-  ELECTIONS: {
-    2012 votes
-  }
-}
-
-*/
+var InfoDisplay = require('./InfoDisplay.jsx');
+var MoneyDisplay = require('./MoneyDisplay.jsx');
+var EducationDisplay = require('./EducationDisplay.jsx');
+var PeopleDisplay = require('./PeopleDisplay.jsx');
+var ElectionsDisplay = require('./ElectionsDisplay.jsx');
 
 var InfoFrame = React.createClass({
-  getInitialState: function() {
-    return {
-      data: null
-    }
-  },
+
   render: function() {
-    console.log(this.props.district);
+
+    if (!this.props.district || !this.props.infoType) {
+      return <section className="right-side-info"></section>;
+    }
+
+    var displayElement;
+    var state = statesByFIPS[this.props.district.G.STATEFP];
+    var districtName = this.props.district.G.NAMELSAD;
+
+    switch (this.props.infoType) {
+      case 'INFO':
+        displayElement = <InfoDisplay district={this.props.district.G}/>;
+        break;
+      case 'MONEY':
+        displayElement = <MoneyDisplay district={this.props.district.G}/>;
+        break;
+      case 'EDUCATION':
+        displayElement = <EducationDisplay district={this.props.district.G}/>;
+        break;
+      case 'PEOPLE':
+        displayElement = <PeopleDisplay district={this.props.district.G}/>;
+        break;
+      case 'ELECTIONS':
+        displayElement = <ElectionsDisplay district={this.props.district.G}/>;
+        break;
+      default:
+        displayElement = <p>Error loading component</p>;
+    }
+
     return (
-      <aside className="right-side-info">
-        <p></p>
-      </aside>
+      <section className="right-side-info">
+        <h2>{state + " " + districtName}</h2>
+        {displayElement}
+      </section>
     );
   }
 });
