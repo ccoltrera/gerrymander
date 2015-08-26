@@ -19,29 +19,39 @@ var t_ids = {
   lang_spoken: 'B16001'
 };
 
+t_ids.getKeyByValue = function( value ) {
+  for(var key in this) {
+    if(this.hasOwnProperty(key)) {
+      if(this[key] === value) return key;
+    }
+  }
+};
+
 // takes a Census Reporter generated JSON and the geo info, returns an object that's more human readable
 function cenRepJSONParser (cenRepJSON, geoID) {
   var parsedJSON = {};
   for (var table in cenRepJSON.tables) {
     var thisTable = cenRepJSON.tables[table];
+    var parsedTable = {};
+    var tableId = thisTable.denominator_column_id.substring(0,6);
+    var tableStr = t_ids.getKeyByValue(tableId);
+    parsedJSON[tableStr] = parsedTable;
     for (var column in thisTable.columns) {
       var thisColumn = thisTable.columns[column];
-
       var parsedColumn = {};
-
       parsedColumn.estimate = cenRepJSON.data[geoID][table].estimate[column];
       parsedColumn.error = cenRepJSON.data[geoID][table].error[column];
-
-      parsedJSON[thisColumn.name] = parsedColumn;
-
+      parsedTable[thisColumn.name] = parsedColumn;
     }
   }
   return parsedJSON;
 }
 
 // takes 4 digit congressional district geoID, ACS table id number
-function getCDReport(that, cd_geoID, req_str) {
-  var t_id = t_ids[req_str];
+function getCDReport(cd_geoID, req_str_arr) {
+  var t_id = req_str_arr.map(function(req_str) {
+    return t_ids[req_str];
+  }).join(',');
   var geoID = '50000US' + cd_geoID;
   var endpoint = 'http://api.censusreporter.org/1.0/data/show/latest?table_ids=' + t_id + '&geo_ids=' + geoID;
   superagent
@@ -49,15 +59,17 @@ function getCDReport(that, cd_geoID, req_str) {
     .end(function(err, res) {
       var parsed_data = cenRepJSONParser(res.body, geoID);
       var stateObj = {};
-      stateObj['cd_' + req_str] = parsed_data;
-      console.log(stateObj);
-      // that.setState(stateObj);
+      stateObj['district'] = parsed_data;
+      // console.log(stateObj);
+      this.setState(stateObj);
     });
 }
 
 // takes state FIPS, ACS table id number
-function getStateReport(that, stateFP, req_str) {
-  var t_id = t_ids[req_str];
+function getStateReport(stateFP, req_str_arr) {
+  var t_id = req_str_arr.map(function(req_str) {
+    return t_ids[req_str];
+  }).join(',');
   var geoID = '04000US' + stateFP;
   var endpoint = 'http://api.censusreporter.org/1.0/data/show/latest?table_ids=' + t_id + '&geo_ids=' + geoID;
   superagent
@@ -65,14 +77,14 @@ function getStateReport(that, stateFP, req_str) {
     .end(function(err, res) {
       var parsed_data = cenRepJSONParser(res.body, geoID);
       var stateObj = {};
-      stateObj['state_' + req_str] = parsed_data;
-      console.log(stateObj);
-      // that.setState(stateObj);
+      stateObj['state'] = parsed_data;
+      // console.log(stateObj);
+      this.setState(stateObj);
     });
 }
 
-// getCDReport(this, '5301', 'race');
-// getStateReport(this, '53', 'race');
+// getCDReport(this, '5301', ['race','hh_income']);
+// getStateReport(this, '53', ['race','hh_income']);
 
 module.exports.getCDReport = getCDReport;
 module.exports.getStateReport = getStateReport;
