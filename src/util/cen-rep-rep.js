@@ -83,8 +83,8 @@ function getStateReport(stateFP, req_str_arr) {
     });
 }
 
-// getCDReport(this, '5301', ['race','hh_income']);
-// getStateReport(this, '53', ['race','hh_income']);
+// getCDReport('5301', ['race','hh_income']);
+// getStateReport('53', ['race','hh_income']);
 
 module.exports.getCDReport = getCDReport;
 module.exports.getStateReport = getStateReport;
