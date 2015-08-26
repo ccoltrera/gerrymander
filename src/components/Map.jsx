@@ -1,7 +1,7 @@
 var React = require('react');
 var InfoDisplay = require('./InfoDisplay.jsx');
 var NavFrame = require('./NavFrame.jsx');
-var FIPS = require('../data/FIPS');
+var FIPS = require('../../data/FIPS');
 
 var styles = [
   {

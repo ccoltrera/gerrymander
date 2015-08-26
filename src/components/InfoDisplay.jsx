@@ -1,9 +1,9 @@
 'use strict';
 var React = require('react');
-var censusData = require('./cen-rep-rep');
+var censusData = require('../util/cen-rep-rep');
 
 var data = ['INFO', 'MONEY', 'EDUCATION', 'PEOPLE', 'ELECTIONS'];
-var statesByFIPS = require('../data/statesByFIPS');
+var statesByFIPS = require('../../data/statesByFIPS');
 
 /*
 {
