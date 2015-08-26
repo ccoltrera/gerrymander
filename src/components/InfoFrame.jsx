@@ -42,7 +42,7 @@ var InfoFrame = React.createClass({
     }
 
     return (
-      <section className="right-side-info">
+      <section id="info-frame">
         <h2>{state + " " + districtName}</h2>
         {displayElement}
       </section>
