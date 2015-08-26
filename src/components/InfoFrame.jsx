@@ -12,30 +12,28 @@ var ElectionsDisplay = require('./ElectionsDisplay.jsx');
 var InfoFrame = React.createClass({
 
   render: function() {
-
     if (!this.props.district || !this.props.infoType) {
       return <section className="right-side-info"></section>;
     }
-
     var displayElement;
-    var state = statesByFIPS[this.props.district.G.STATEFP];
-    var districtName = this.props.district.G.NAMELSAD;
+    var state = statesByFIPS[this.props.district.feature.properties.STATEFP];
+    var districtName = this.props.district.feature.properties.NAMELSAD;
 
     switch (this.props.infoType) {
       case 'INFO':
-        displayElement = <InfoDisplay district={this.props.district.G}/>;
+        displayElement = <InfoDisplay district={this.props.district.feature.properties}/>;
         break;
       case 'MONEY':
-        displayElement = <MoneyDisplay district={this.props.district.G}/>;
+        displayElement = <MoneyDisplay district={this.props.district.feature.properties}/>;
         break;
       case 'EDUCATION':
-        displayElement = <EducationDisplay district={this.props.district.G}/>;
+        displayElement = <EducationDisplay district={this.props.district.feature.properties}/>;
         break;
       case 'PEOPLE':
-        displayElement = <PeopleDisplay district={this.props.district.G}/>;
+        displayElement = <PeopleDisplay district={this.props.district.feature.properties}/>;
         break;
       case 'ELECTIONS':
-        displayElement = <ElectionsDisplay district={this.props.district.G}/>;
+        displayElement = <ElectionsDisplay district={this.props.district.feature.properties}/>;
         break;
       default:
         displayElement = <p>Error loading component</p>;
