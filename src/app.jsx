@@ -49,7 +49,6 @@ var MapContainer = React.createClass({
   render: function() {
     var mapComponent = <MapComponent {...this.state}/>;
     var loadingDisplay = <p>loading map...</p>;
-    console.log('rep data:', this.state.repdata);
     return (
       <div className="wrapper">
         <HeaderContainer />
