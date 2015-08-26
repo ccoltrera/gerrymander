@@ -5,7 +5,6 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test-build": "browserify test/test-app.jsx -o test/test-bundle.js",
     "build": "browserify src/app.jsx -o public/js/bundle.js",
     "watch": "watchify -o public/js/bundle.js -v -d src/app.jsx"
   },
@@ -32,11 +31,9 @@
   "homepage": "https://github.com/ccoltrera/gerrymander#readme",
   "devDependencies": {
     "browserify": "^11.0.1",
-    "google-maps": "^3.1.0",
     "jsonfile": "^2.2.1",
     "leaflet": "^0.7.3",
     "react": "^0.13.3",
-    "react-gmaps": "^0.3.1",
     "react-leaflet": "^0.6.2",
     "reactify": "^1.1.1",
     "sassify": "^0.9.1",
