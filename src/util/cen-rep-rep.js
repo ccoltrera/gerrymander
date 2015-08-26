@@ -33,10 +33,12 @@ function cenRepJSONParser (cenRepJSON, geoID) {
   for (var table in cenRepJSON.tables) {
     var thisTable = cenRepJSON.tables[table];
     var parsedTable = {};
-    var tableId = thisTable.denominator_column_id.substring(0,6);
-    var tableStr = t_ids.getKeyByValue(tableId);
-    parsedJSON[tableStr] = parsedTable;
     for (var column in thisTable.columns) {
+
+      var tableId = column.substring(0,6);
+      var tableStr = t_ids.getKeyByValue(tableId);
+      if (!parsedJSON[tableStr]) parsedJSON[tableStr] = parsedTable;
+
       var thisColumn = thisTable.columns[column];
       var parsedColumn = {};
       parsedColumn.estimate = cenRepJSON.data[geoID][table].estimate[column];
