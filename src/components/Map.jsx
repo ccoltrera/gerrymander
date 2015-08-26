@@ -100,7 +100,7 @@ var Map = React.createClass({
   },
   render: function() {
     return (
-      <main>
+      <main id="main">
         <div id="map" ref="map"></div>
         <InfoDisplay district={this.state.district} infoType={this.state.infoType}/>
         <NavFrame selectInfoType={this.selectInfoType}/>
