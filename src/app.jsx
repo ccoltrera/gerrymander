@@ -32,6 +32,15 @@ var MapContainer = React.createClass({
         });
       }.bind(this));
   },
+  loadElectionData: function() {
+    superagent
+      .get('results_2012.json')
+      .end(function(err, res) {
+        this.setState({
+          electiondata: res.body
+        });
+      }.bind(this));
+  },
   getInitialState: function() {
     return {
       districts: null,
@@ -45,6 +54,7 @@ var MapContainer = React.createClass({
   componentDidMount: function() {
     this.loadDistricts();
     this.loadRepData();
+    this.loadElectionData();
   },
   render: function() {
     var mapComponent = <MapComponent {...this.state}/>;
