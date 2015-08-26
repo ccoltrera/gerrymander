@@ -2,18 +2,18 @@
 
 var React = require('react');
 var HeaderContainer = require('./components/HeaderContainer.jsx');
-var Map = require('./components/Map.jsx');
+var MapComponent = require('./components/Map.jsx');
 var superagent = require('superagent');
-var GoogleMapsLoader = require('google-maps');
-GoogleMapsLoader.KEY = 'AIzaSyDGaEYHC5Zu03udg2F_vYLvvL75H3zout8';
 
 var MapContainer = React.createClass({
-  loadGoogleMapsAPI: function() {
-    GoogleMapsLoader.load(function(google) {
-      this.setState({
-        google: google
-      });
-    }.bind(this));
+  loadDistricts: function() {
+    superagent
+      .get('cd113.json')
+      .end(function(err, res) {
+        this.setState({
+          districts: res.body
+        });
+      }.bind(this));
   },
   loadRepData: function() {
     superagent
@@ -34,7 +34,7 @@ var MapContainer = React.createClass({
   },
   getInitialState: function() {
     return {
-      google: null,
+      districts: null,
       repdata: null,
       mapDefaults: {
         zoom: 5,
@@ -43,16 +43,16 @@ var MapContainer = React.createClass({
     }
   },
   componentDidMount: function() {
-    this.loadGoogleMapsAPI();
+    this.loadDistricts();
     this.loadRepData();
   },
   render: function() {
-    var mapComponent = <Map {...this.state}/>;
+    var mapComponent = <MapComponent {...this.state}/>;
     var loadingDisplay = <p>loading map...</p>;
     return (
       <div className="wrapper">
         <HeaderContainer />
-        {this.state.google && this.state.repdata ? mapComponent : loadingDisplay}
+        {this.state.districts && this.state.repdata ? mapComponent : loadingDisplay}
       </div>
     );
 
@@ -60,3 +60,4 @@ var MapContainer = React.createClass({
 });
 
 React.render(<MapContainer/>, document.body);
+

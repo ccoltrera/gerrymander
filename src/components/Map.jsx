@@ -1,113 +1,112 @@
+'use strict';
 var React = require('react');
-var InfoFrame = require('./InfoFrame.jsx');
-var NavFrame = require('./NavFrame.jsx');
+var leaflet = require('leaflet');
+var rL = require('react-leaflet');
+var Map = rL.Map;
+var Marker = rL.Marker;
+var Popup = rL.Popup;
+var TileLayer = rL.TileLayer;
+var GeoJson = rL.GeoJson;
+
+var superagent = require('superagent');
 var FIPS = require('../data/FIPS');
 
-var styles = [
-  {
-    stylers: [
-      { visibility: "simplified" },
-      { saturation: -20 }
-    ]
-  },{
-    featureType: "poi",
-    stylers: [
-      { visibility: "off" }
-    ]
-  },{
-    featureType: "road",
-    elementType: "geometry",
-    stylers: [
-      { color: "#999999" }
-    ]
-  },{
-    featureType: "road",
-    elementType: "labels",
-    stylers: [
-      { visibility: "off" }
-    ]
-  },{
-    featureType: "landscape",
-    stylers: [
-      { visibility: "off" }
-    ]
-  }
-];
+var InfoFrame = require('./InfoFrame.jsx');
+var NavFrame = require('./NavFrame.jsx');
 
-var Map = React.createClass({
-
+var MapComponent = React.createClass({
   selectInfoType: function(infoType) {
     this.setState({
       infoType: infoType
     });
   },
-
-  loadMap: function() {
-
-    var el = React.findDOMNode(this.refs.map);
-    var map = new this.props.google.maps.Map(el, this.props.mapDefaults);
-    map.setOptions({styles: styles});
-    map.data.loadGeoJson('cd113.json');
-    map.data.setStyle(function(feature) {
-      var color, fillOpacity;
-      var repdata = this.props.repdata;
-      var rep = repdata[ FIPS[feature.G.STATEFP] + feature.G.CD113FP];
-      color = (rep) ? (
-        (rep.party === 'Republican') ? 'red' : 'blue'
-      ) : 'gray' ;
-
-      if (feature.getProperty('selected')) {
-        color = 'white';
-        fillOpacity = 0.75;
-      }
-
-      return ({
-        fillOpacity: fillOpacity,
-        fillColor: color,
-        strokeColor: 'white',
-        strokeWeight: 0.5
-      });
-    }.bind(this));
-    map.data.addListener('click', function(event) {
-      if (this.state.district) this.state.district.setProperty('selected', false);
-      event.feature.setProperty('selected', true);
-      this.setState({
-        district: event.feature
-      });
-      // console.log("District: " + event.feature.G.CD113FP);
-      // console.log("State: " + FIPS[event.feature.G.STATEFP]);
-    }.bind(this));
-    map.data.addListener('mouseover', function(event) {
-      map.data.revertStyle();
-      map.data.overrideStyle(event.feature, {strokeWeight: 2});
-    });
-    map.data.addListener('mouseout', function(event) {
-      map.data.revertStyle();
-    });
-    this.setState({
-      map: map
-    });
+  getColor: function(STATEFP, CD113FP) {
+    var color;
+    var repdata = this.props.repdata;
+    var rep = repdata[ FIPS[STATEFP] + CD113FP];
+    color = (rep) ? (
+      (rep.party === 'Republican') ? 'red' : 'blue'
+    ) : 'gray' ;
+    return color;
   },
-  getInitialState: function() {
+  getStyle: function(feature) {
     return {
-      map: null,
-      district: null,
-      infoType: ""
+      fillColor: this.getColor(feature.properties.STATEFP, feature.properties.CD113FP),
+      fillOpacity: 0.5,
+      color: 'white',
+      weight: 1.5
     };
   },
-  componentDidMount: function() {
-    this.loadMap();
+  getInitialState: function() {
+    return ({
+      district: null,
+      infoType: ""
+    })
   },
   render: function() {
+    var selectDistrict = function(district) {
+      var oldDistrict = this.state.district;
+      if (oldDistrict) oldDistrict.setStyle({
+        fillColor: this.getColor(oldDistrict.feature.properties.STATEFP, oldDistrict.feature.properties.CD113FP)
+      });
+      district.setStyle({
+        fillColor: 'white'
+      });
+      this.setState({
+        district: district
+      })
+    }.bind(this);
+    function boundsToCenter(bounds) {
+      var lat = (bounds._northEast.lat + bounds._southWest.lat) / 2;
+      var lng = (bounds._northEast.lng + bounds._southWest.lng) / 2;
+      return new leaflet.LatLng(lat, lng);
+    }
+    var gJ = this.props.districts ? (
+      <GeoJson
+        ref="GeoJson"
+        repdata={this.props.repdata}
+        data={this.props.districts}
+        style={this.getStyle}
+        onEachFeature={
+          function(feature, layer) {
+            layer.on('click', function(e) {
+              selectDistrict(e.target);
+              var leafletMap = this.refs.map.leafletElement;
+              // leafletMap.fitBounds(e.target.getBounds());
+              leafletMap.panTo( boundsToCenter(e.target.getBounds()) );
+            }.bind(this));
+            layer.on('mouseover', function(e) {
+              e.target.setStyle({
+                weight: 3
+              });
+            });
+            layer.on('mouseout', function(e) {
+              e.target.setStyle({
+                weight: 1.5
+              });
+            });
+          }.bind(this)
+        }
+      />
+    ) : null;
+    var leafletGJ = gJ ? gJ.leafletElement : null;
     var infoFrame = this.state.district && this.state.infoType
-    return (
+    var map = (
       <main>
-        <div id="map" ref="map"></div>
+        <Map id="map" ref="map" center={this.props.mapDefaults.center} zoom={this.props.mapDefaults.zoom}>
+          <TileLayer
+            url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          />
+          {gJ}
+        </Map>
         <InfoFrame district={this.state.district} infoType={this.state.infoType}/>
         <NavFrame selectInfoType={this.selectInfoType}/>
       </main>
     );
+
+    return  map;
   }
 });
 
-module.exports = Map;
+module.exports = MapComponent;
