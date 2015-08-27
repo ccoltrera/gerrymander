@@ -110,7 +110,7 @@ var MapComponent = React.createClass({
     var leafletGJ = gJ ? gJ.leafletElement : null;
     var infoFrame = this.state.district && this.state.infoType
     var map = (
-      <main>
+      <main id="main-container">
         <Map id="map" ref="map" center={this.props.mapDefaults.center} zoom={this.props.mapDefaults.zoom}>
           <TileLayer
             url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
