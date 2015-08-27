@@ -1,26 +1,17 @@
 /*
-Colors:
-Highlight
-    #aa863a;
-    rgb(170, 134, 58);
-Light
-  #f0eceb;
-  rgb(240, 236, 235);
-Dark
-  #283018;
-  rgb(40, 48, 24);
-Teal
-  #729f98
-  rgb(114, 159, 152)
+New colors
+blue        rgba(0, 116, 228, 1)
+light blue  rgba(226, 239, 252, 1)
+dark text   rgba(51, 51, 51, 1)
+info frame  rgba(51,51,51,.85)
+white       rgba(255, 255, 255, 1)
 */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  color: #283018;
-  color: rgb(40, 48, 24);
-  background: #f0eceb;
-  background: rgb(240, 236, 235);
+  color: rgba(51, 51, 51, 1);
+  background: rgba(255, 255, 255, 1);
   font-family: 'Franklin Gothic Medium','Franklin Gothic','ITC Franklin Gothic',Arial,sans-serif;
 }
 * {
@@ -34,17 +25,15 @@ header {
   position: relative;
   text-align: center;
   height: 48px;
-  color: #283018;
-  color: rgb(40, 48, 24);
-  background: #729f98;
-  background: rgb(114, 159, 152);
-  border-bottom: solid 1px #283018;
-  border-bottom: solid 1px rgb(40, 48, 24);
+  color: rgba(255, 255, 255, 1);
+  background: rgba(0, 116, 228, 0.6);
+  border-bottom: solid 1px rgba(51, 51, 51, 1);
 }
 header h1 {
   margin: auto;
   margin-top: 7px;
   font-weight: 100;
+  letter-spacing: 7px;
 }
 #main-container {
   height: calc(100% - 48px);
@@ -62,9 +51,7 @@ header h1 {
   padding: 10px;
   overflow: scroll;
   color: rgb(40, 48, 24);
-  background: #f0eceb;
-  background: rgb(240, 236, 235);
-  background: rgba(240, 236, 235, 0.75);
+  background: rgba(226, 239, 252, .7);
 }
 #info-frame.active {
   width: 100%;
@@ -101,8 +88,8 @@ header h1 {
 footer {
   clear: both;
   height: 115px;
-  background: #f0eceb;
-  background: rgb(240, 236, 235);
+  border-top: 1px solid rgba(0, 116, 228, 1);
+  background: rgba(255, 255, 255, 1);
   position: relative;
   z-index: 2000;
 }
@@ -126,23 +113,16 @@ footer li span.text {
   font-size: 0.7em;
   padding: 13px 0 15px;
 }
-footer li:hover span.text {
-  color: #aa863a;
-  color: rgb(170, 134, 58);
-}
-footer li.active span.text {
-  color: #aa863a;
-  color: rgb(170, 134, 58);
+footer li:hover span.text, footer li.active span.text {
+  color: rgba(0, 116, 228, 1);
 }
 footer li span.icon {
   display: block;
   margin: auto;
   height: 60px;
   width: 60px;
-  background: #e6e2e1;
-  background: rgb(230, 226, 225);
+  background: rgba(226, 239, 252, 1);
 }
-footer li:hover span.icon, footer li.active span.icon  {
-  background: #aa863a;
-  background: rgb(170, 134, 58);
+footer li:hover span.icon, footer li.active span.icon {
+  background: rgba(0, 116, 228, 1);
 }
