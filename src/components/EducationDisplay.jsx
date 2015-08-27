@@ -19,10 +19,18 @@ function buildListElement(heading, container, subfield) {
 
 var EducationDisplay = React.createClass({
 
-  componentDidMount: function() {
+  queryDataAndSetStateAsync: function(props) {
     var fields = ['ed_attain', 'lang_spoken'];
     getCDReport.call(this, this.props.district.GEOID, fields);
     getStateReport.call(this, this.props.district.STATEFP, fields);
+  },
+
+  componentDidMount: function() {
+    this.queryDataAndSetStateAsync(this.props);
+  },
+
+  componentWillReceiveProps: function(newprops) {
+    this.queryDataAndSetStateAsync(newprops);
   },
 
   render: function() {
