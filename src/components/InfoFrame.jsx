@@ -1,6 +1,5 @@
 'use strict';
 var React = require('react');
-var censusData = require('../util/cen-rep-rep');
 var data = ['INFO', 'MONEY', 'EDUCATION', 'PEOPLE', 'ELECTIONS'];
 var statesByFIPS = require('../data/statesByFIPS');
 var InfoDisplay = require('./InfoDisplay.jsx');
@@ -21,7 +20,7 @@ var InfoFrame = React.createClass({
 
     switch (this.props.infoType) {
       case 'INFO':
-        displayElement = <InfoDisplay district={this.props.district.feature.properties}/>;
+        displayElement = <InfoDisplay district={this.props.district.feature.properties} repdata={this.props.repdata}/>;
         break;
       case 'MONEY':
         displayElement = <MoneyDisplay district={this.props.district.feature.properties}/>;

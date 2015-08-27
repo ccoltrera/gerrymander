@@ -56,10 +56,28 @@ var MapComponent = React.createClass({
         district: district
       })
     }.bind(this);
-    function boundsToCenter(bounds) {
-      var lat = (bounds._northEast.lat + bounds._southWest.lat) / 2;
-      var lng = (bounds._northEast.lng + bounds._southWest.lng) / 2;
-      return new leaflet.LatLng(lat, lng);
+    function targetToCenter(target) {
+      if (target.feature.properties.STATEFP === '02') {
+        return new leaflet.LatLng(64 , -149)
+      } else {
+        var bounds = target.getBounds();
+        var nelat = bounds._northEast.lat,
+        swlat = bounds._southWest.lat,
+        nelng = bounds._northEast.lng,
+        swlng = bounds._southWest.lng;
+
+        var nelatrad = nelat * Math.PI / 180,
+        swlatrad = swlat * Math.PI / 180,
+        nelngrad = nelng * Math.PI / 180,
+        swlngrad = swlng * Math.PI / 180;
+
+        var Bx = Math.cos(nelatrad) * Math.cos(swlngrad-nelngrad);
+        var By = Math.cos(nelatrad) * Math.sin(swlngrad-nelngrad);
+        var cntlatrad = Math.atan2(Math.sin(swlatrad) + Math.sin(nelatrad), Math.sqrt((Math.cos(swlatrad)+Bx)*(Math.cos(swlatrad)+Bx) + By*By ));
+        var cntlngrad = nelngrad + Math.atan2(By, Math.cos(swlatrad) + Bx);
+
+        return new leaflet.LatLng(cntlatrad / Math.PI * 180 , cntlngrad / Math.PI * 180);
+      }
     }
     var gJ = this.props.districts ? (
       <GeoJson
@@ -73,7 +91,7 @@ var MapComponent = React.createClass({
               selectDistrict(e.target);
               var leafletMap = this.refs.map.leafletElement;
               // leafletMap.fitBounds(e.target.getBounds());
-              leafletMap.panTo( boundsToCenter(e.target.getBounds()) );
+              leafletMap.panTo( targetToCenter(e.target) );
             }.bind(this));
             layer.on('mouseover', function(e) {
               e.target.setStyle({
@@ -100,7 +118,7 @@ var MapComponent = React.createClass({
           />
           {gJ}
         </Map>
-        <InfoFrame district={this.state.district} infoType={this.state.infoType}/>
+        <InfoFrame district={this.state.district} infoType={this.state.infoType} repdata={this.props.repdata}/>
         <NavFrame selectInfoType={this.selectInfoType}/>
       </main>
     );
