@@ -46,8 +46,8 @@ var InfoDisplay = React.createClass({
       populationEl = (
         <ul>
           <h3>Population</h3>
-          <li>{'Total : ' + totalPopulation}</li>
-          <li>{'Density : ' + popPerSqMile + ' per sq. mile'}</li>
+          <li>{'Total : ' + totalPopulation.toLocaleString()}</li>
+          <li>{'Density : ' + popPerSqMile.toLocaleString() + ' per sq. mile'}</li>
         </ul>
       );
     } else populationEl = <ul></ul>;

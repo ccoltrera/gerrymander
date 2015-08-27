@@ -2,6 +2,7 @@ var React = require('react');
 var censusData = require('../util/cen-rep-rep');
 var getCDReport = censusData.getCDReport;
 var getStateReport = censusData.getStateReport;
+var formatTable = require('../util/formatTable.jsx');
 
 var MoneyDisplay = React.createClass({
 
@@ -23,40 +24,29 @@ var MoneyDisplay = React.createClass({
 
     var displayElement;
 
-    if (this.state) {
+    if (this.state && this.state.district && this.state.state) {
 
-      var districtListEl;
-      var stateListEl;
+      var district = this.state.district;
+      var state = this.state.state;
 
-      if (this.state.district) {
-
-        var district = this.state.district;
-
-        districtListEl = (
-          <ul>
-            <h4>this district</h4>
-            <li>{'Median household income: ' + district.median_hh_income['Median household income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
-            <li>{'Per capita income: ' + district.pc_income['Per capita income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
-            <li>{'With cash public assistance or Food Stamps/SNAP: ' + ((district.pub_assist['With cash public assistance or Food Stamps/SNAP'].estimate / district.pub_assist['Total:'].estimate) * 100).toFixed(2) + '%'}</li>
-          </ul>
-        );
-      } else districtListEl = <ul></ul>;
-
-      if (this.state.state) {
-
-        var state = this.state.state;
-        stateListEl = (
-          <ul>
-            <h4>state as a whole</h4>
-            <li>{'Median household income: ' + state.median_hh_income['Median household income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
-            <li>{'Per capita income: ' + state.pc_income['Per capita income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
-            <li>{'With cash public assistance or Food Stamps/SNAP: ' + ((state.pub_assist['With cash public assistance or Food Stamps/SNAP'].estimate / state.pub_assist['Total:'].estimate) * 100).toFixed(2) + '%'}</li>
-          </ul>
-        );
-
-      } else stateListEl = <ul></ul>;
-
-      displayElement = [districtListEl, stateListEl];
+      displayElement = formatTable([
+        ['', 'DISTRICT', 'STATE'],
+        [
+          'Median household income',
+          '$' + district.median_hh_income['Median household income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate.toLocaleString(),
+          '$' + state.median_hh_income['Median household income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate.toLocaleString()
+        ],
+        [
+          'Per capita income',
+          '$' + district.pc_income['Per capita income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate.toLocaleString(),
+          '$' + state.pc_income['Per capita income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate.toLocaleString()
+        ],
+        [
+          'Public assistance or Food Stamps/SNAP',
+          ((district.pub_assist['With cash public assistance or Food Stamps/SNAP'].estimate / district.pub_assist['Total:'].estimate) * 100).toFixed(2) + '%',
+          ((state.pub_assist['With cash public assistance or Food Stamps/SNAP'].estimate / district.pub_assist['Total:'].estimate) * 100).toFixed(2) + '%'
+        ]
+      ]);
 
     } else displayElement = <p>loading data...</p>;
 
