@@ -1,5 +1,6 @@
 var React = require('react');
 var FIPS = require('../data/FIPS');
+var whoDraws = require('../data/who-draws')
 var getGerryNumber = require('../util/gerry-number');
 var censusData = require('../util/cen-rep-rep');
 var getCDReport = censusData.getCDReport;
@@ -31,9 +32,7 @@ var InfoDisplay = React.createClass({
         }
       };
     }
-    var whenDrawn = '2010 or so, I guess';
-    var whoDrew = 'some jerkfaces';
-
+    var whoDrew = whoDraws[this.props.district.properties.STATEFP];
     var gerryNumber = getGerryNumber( this.props.district );
 
     var populationEl;
@@ -63,9 +62,8 @@ var InfoDisplay = React.createClass({
             <li><a href={rep.person.link}>More info</a></li>
           </ul>
           <ul>
-            <h5>District created</h5>
-            <li>{whenDrawn}</li>
-            <li>{whoDrew}</li>
+            <h5>District Drawn By: </h5>
+            <p>{whoDrew}</p>
           </ul>
           {populationEl}
         </ul>
