@@ -122,7 +122,7 @@ var MapComponent = React.createClass({
           {gJ}
         </Map>
         <InfoFrame district={this.state.district} infoType={this.state.infoType} repdata={this.props.repdata}/>
-        <NavFrame selectInfoType={this.selectInfoType}/>
+        <NavFrame selectInfoType={this.selectInfoType} infoType={this.state.infoType}/>
       </main>
     );
 
