@@ -1,11 +1,12 @@
 var React = require('react');
 var FIPS = require('../data/FIPS');
+var getGerryNumber = require('../util/gerry-number');
 
 var InfoDisplay = React.createClass({
 
   render: function() {
 
-    var rep = this.props.repdata[FIPS[this.props.district.STATEFP] + this.props.district.CD113FP];
+    var rep = this.props.repdata[FIPS[this.props.district.properties.STATEFP] + this.props.district.properties.CD113FP];
     if (!rep) {
       rep = {
         person: {
@@ -16,6 +17,8 @@ var InfoDisplay = React.createClass({
     }
     var whenDrawn = '2010 or so, I guess';
     var whoDrew = 'some jerkfaces';
+
+    var gerryNumber = getGerryNumber( this.props.district );
 
     return (
       <div>
