@@ -2,41 +2,10 @@ var React = require('react');
 var censusData = require('../util/cen-rep-rep');
 var getCDReport = censusData.getCDReport;
 var getStateReport = censusData.getStateReport;
+var formatTable = require('../util/formatTable.jsx');
 
 function percent(dividend, divisor) {
   return ((dividend / divisor) * 100).toFixed(2) + '%';
-}
-
-function formatTable(array) {
-  var html = [];
-  var headRow = array.shift();
-  html.push(
-    <thead>
-      <th>{headRow[0]}</th>
-      <th>{headRow[1]}</th>
-      <th>{headRow[2]}</th>
-    </thead>
-  );
-  array.forEach(function(row) {
-    var output;
-    if (row.length === 3) {
-      output = (
-        <tr>
-          <td>{row[0]}</td>
-          <td>{row[1]}</td>
-          <td>{row[2]}</td>
-        </tr>
-      );
-    } else if (row.length === 1) {
-      output = (
-        <tr>
-          <th colspan='3'>{row[0]}</th>
-        </tr>
-      );
-    }
-    html.push(output);
-  });
-  return html;
 }
 
 var RaceDisplay = React.createClass({
@@ -70,7 +39,7 @@ var RaceDisplay = React.createClass({
       var raceTotalState = state.race['Total:'].estimate;
 
       displayElement = formatTable([
-        ['', 'district', 'state'],
+        ['', 'DISTRICT', 'STATE'],
         [
           'American Indian and Alaska Native',
           percent(district.race['American Indian and Alaska Native alone'].estimate, raceTotalDistrict),
