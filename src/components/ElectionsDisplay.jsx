@@ -56,8 +56,4 @@ var ElectionsDisplay = React.createClass({
   }
 });
 
-// ELECTIONS: {
-//     2012 votes
-//   }
-
 module.exports = ElectionsDisplay;
