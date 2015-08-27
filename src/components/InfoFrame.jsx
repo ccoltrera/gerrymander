@@ -26,7 +26,7 @@ var InfoFrame = React.createClass({
 
     switch (this.props.infoType) {
       case 'INFO':
-        displayElement = <InfoDisplay district={this.props.district.feature.properties} repdata={this.props.repdata}/>;
+        displayElement = <InfoDisplay district={this.props.district.feature} repdata={this.props.repdata}/>;
         break;
       case 'MONEY':
         displayElement = <MoneyDisplay district={this.props.district.feature.properties}/>;

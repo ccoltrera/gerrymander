@@ -91,7 +91,10 @@ var MapComponent = React.createClass({
               selectDistrict(e.target);
               var leafletMap = this.refs.map.leafletElement;
               // leafletMap.fitBounds(e.target.getBounds());
-              leafletMap.panTo( targetToCenter(e.target) );
+              var sidebarWidth = this.state.sidebarOpen ? leafletMap.getSize().x * 0.30 : 0;
+              var adjPoint = leafletMap.project( targetToCenter(e.target) , leafletMap.getZoom() ).add([sidebarWidth / 2, 0]);
+              var adjLatLng = leafletMap.unproject(adjPoint);
+              leafletMap.setView( adjLatLng );
             }.bind(this));
             layer.on('mouseover', function(e) {
               e.target.setStyle({

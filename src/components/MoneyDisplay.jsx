@@ -5,36 +5,49 @@ var getStateReport = censusData.getStateReport;
 
 var MoneyDisplay = React.createClass({
 
-  componentDidMount: function() {
+  queryDataAndSetStateAsync: function(props) {
     var fields = ['median_hh_income', 'pc_income', 'pub_assist'];
-    getCDReport.call(this, this.props.district.GEOID, fields);
-    getStateReport.call(this, this.props.district.STATEFP, fields);
+    getCDReport.call(this, props.district.GEOID, fields);
+    getStateReport.call(this, props.district.STATEFP, fields);
+  },
+
+  componentDidMount: function() {
+    this.queryDataAndSetStateAsync(this.props);
+  },
+
+  componentWillReceiveProps: function(newprops) {
+    this.queryDataAndSetStateAsync(newprops);
   },
 
   render: function() {
 
     var displayElement;
 
-    if (this.state && this.state.district) {
+    if (this.state) {
+
       var district = this.state.district;
-      var state = this.state.state;
-      displayElement = [
+      var districtListEl = district ? (
         <ul>
           <h4>this district</h4>
           <li>{'Median household income: ' + district.median_hh_income['Median household income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
           <li>{'Per capita income: ' + district.pc_income['Per capita income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
           <li>{'Number on public assistance programs or Food Stamps/SNAP: ' + district.pub_assist['With cash public assistance or Food Stamps/SNAP'].estimate}</li>
         </ul>
-        ,
+      ) : <ul></ul>;
+
+      var state = this.state.state;
+      var stateListEl = state ? (
         <ul>
           <h4>state as a whole</h4>
           <li>{'Median household income: ' + state.median_hh_income['Median household income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
           <li>{'Per capita income: ' + state.pc_income['Per capita income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
           <li>{'Number on public assistance programs or Food Stamps/SNAP: ' + state.pub_assist['With cash public assistance or Food Stamps/SNAP'].estimate}</li>
         </ul>
-      ];
-    }
-    else displayElement = <p>loading data...</p>;
+      ) : <ul></ul>;
+
+      displayElement = [districtListEl, stateListEl];
+
+    } else displayElement = <p>loading data...</p>;
 
     return (
       <div>
