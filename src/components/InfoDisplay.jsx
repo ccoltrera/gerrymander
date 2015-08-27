@@ -6,6 +6,14 @@ var InfoDisplay = React.createClass({
   render: function() {
 
     var rep = this.props.repdata[FIPS[this.props.district.STATEFP] + this.props.district.CD113FP];
+    if (!rep) {
+      rep = {
+        person: {
+          name: 'currently none',
+          link: ''
+        }
+      };
+    }
     var whenDrawn = '2010 or so, I guess';
     var whoDrew = 'some jerkfaces';
 
