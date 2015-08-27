@@ -55,18 +55,15 @@ main {
 *Left push data
 *
 */
-#info-frame {
-  top: 0;
-  left: 0;
-  transform: translateX(-100%);
-}
-@media all and (min-width: 320px) {
+/*@media screen and (min-width: 600px) {
   #info-frame {
-    transform: translateX(-300px);
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
   }
-}
-#info-frame.is-active {
-  transform: translateX(0);
+  #info-frame.is-active {
+    transform: translateX(0);
+  }
 }
 /*
 * Content wrapper
@@ -74,57 +71,50 @@ main {
 #map.has-push-left {
   transform: translateX(100%);
 }
-@media all and (min-width: 320px) {
-  #map.has-push-left {
-    transform: translateX(300px);
-  }
-}
 #map.has-push-right {
   transform: translateX(-100%);
 }
-@media all and (min-width: 320px) {
-  #map.has-push-right {
-    transform: translateX(-300px);
-  }
-}
+
 
 /*
 *
 * Bottom push data
 *
 */
-#info-frame {
-  vertical-align: middle;
-  width: 100%;
-  height: 60px;
-  text-align: center;
-  overflow-x: scroll;
-}
-#info-frame .c-menu__close {
-  display: inline-block;
-  margin-right: 12px;
-  padding: 0 24px;
-  height: 60px;
-  line-height: 60px;
-}
-#info-frame {
-  bottom: 0;
-  left: 0;
-  transform: translateY(60px);
-}
-#info-frame.is-active {
-  transform: translateY(0);
-}
-/*
-* Content wrapper
-*/
-#map.has-push-top {
-  transform: translateY(60px);
-}
+@media screen and (max-width: 599px) {
+  #info-frame {
+    vertical-align: middle;
+    width: 100%;
+    height: 60px;
+    text-align: center;
+    overflow-x: scroll;
+  }
+  #info-frame .c-menu__close {
+    display: inline-block;
+    margin-right: 12px;
+    padding: 0 24px;
+    height: 60px;
+    line-height: 60px;
+  }
+  #info-frame {
+    bottom: 0;
+    left: 0;
+    transform: translateY(60px);
+  }
+  #info-frame.is-active {
+    transform: translateY(0);
+  }
+  /*
+  * Content wrapper
+  */
+  #map.has-push-top {
+    transform: translateY(60px);
+  }
 
-#map.has-push-bottom {
-  transform: translateY(-60px);
-}
+  #map.has-push-bottom {
+    transform: translateY(-60px);
+  }
+}*/
 /*
 *
 * End menu slider
@@ -133,12 +123,12 @@ main {
 
 
 
-aside {
+#info-frame {
   width: 100%;
   height: 100px;
 }
 @media screen and (min-width: 600px) {
-  aside {
+  #info-frame {
     height: calc(100% - 115px);
     width: 30%;
     float: right;
@@ -146,6 +136,7 @@ aside {
 }
 footer {
   height: 115px;
+  clear: both;
 }
 footer ul {
   list-style: none;
