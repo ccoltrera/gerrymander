@@ -1,13 +1,21 @@
+/*
+New colors
+blue        rgba(0, 116, 228, 1)
+light blue  rgba(226, 239, 252, 1)
+dark text   rgba(51, 51, 51, 1)
+info frame  rgba(51,51,51,.85)
+white       rgba(255, 255, 255, 1)
+*/
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background: #f0eceb;
+  color: rgba(51, 51, 51, 1);
+  background: rgba(255, 255, 255, 1);
   font-family: 'Franklin Gothic Medium','Franklin Gothic','ITC Franklin Gothic',Arial,sans-serif;
 }
 * {
   margin: 0;
-  color: #283018;
 }
 .wrapper {
   height: 100%;
@@ -17,20 +25,17 @@ header {
   position: relative;
   text-align: center;
   height: 48px;
-  border-bottom: solid 1px #283018;
-}
-header label {
-  font-size: 35px;
-  position: absolute;
-  top: 0;
-  left: 0;
+  color: rgba(255, 255, 255, 1);
+  background: rgba(0, 116, 228, 0.6);
+  border-bottom: solid 1px rgba(51, 51, 51, 1);
 }
 header h1 {
   margin: auto;
   margin-top: 7px;
   font-weight: 100;
+  letter-spacing: 7px;
 }
-main {
+#main-container {
   height: calc(100% - 48px);
   width: 100%;
   overflow: auto;
@@ -40,21 +45,22 @@ main {
   height: calc(100% - 115px);
   width: 100%;
 }
-
 #info-frame {
   position: absolute;
   bottom: -70px;
+  padding: 10px;
+  overflow: scroll;
+  color: rgb(40, 48, 24);
+  background: rgba(226, 239, 252, .7);
 }
 #info-frame.active {
   width: 100%;
   height: 185px;
-  overflow: scroll;
   margin-top: -185px;
-  background: rgb(240, 236, 235);
-  background: rgba(240, 236, 235, 0.75);
   z-index: 1000;
   transition: 1s;
   bottom: 115px;
+  box-sizing: border-box;
 }
 @media screen and (min-width: 600px) {
   #info-frame {
@@ -62,19 +68,28 @@ main {
     bottom: 115px;
   }
   #info-frame.active {
-    height: calc(100% - 115px);
     width: 30%;
-    overflow: scroll;
-    position: absolute;
+    height: calc(100% - 115px);
     top: 0;
     right: 0;
     margin-top: 0;
   }
 }
+#info-frame h2, #info-frame h3, #info-frame h4 {
+  font-size: 1em;
+}
+#info-frame > div {
+    font-size: 0.8em;
+}
+#info-frame ul {
+  list-style: none;
+  padding: 0;
+}
 footer {
   clear: both;
   height: 115px;
-  background: rgb(240, 236, 235);
+  border-top: 1px solid rgba(0, 116, 228, 1);
+  background: rgba(255, 255, 255, 1);
   position: relative;
   z-index: 2000;
 }
@@ -95,26 +110,19 @@ footer li {
 }
 footer li span.text {
   display: block;
-  font-size: 10px;
+  font-size: 0.7em;
   padding: 13px 0 15px;
 }
-footer li:hover span.text {
-  color: #aa863a;
-}
-footer li.active span.text {
-  color: #aa863a;
+footer li:hover span.text, footer li.active span.text {
+  color: rgba(0, 116, 228, 1);
 }
 footer li span.icon {
   display: block;
   margin: auto;
   height: 60px;
   width: 60px;
-  background-color: #e6e2e1;
+  background: rgba(226, 239, 252, 1);
 }
-footer li:hover span.icon {
-  background: #aa863a;
+footer li:hover span.icon, footer li.active span.icon {
+  background: rgba(0, 116, 228, 1);
 }
-footer li.active span.icon {
-  background: #aa863a;
-}
-
