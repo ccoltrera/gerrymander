@@ -47,7 +47,7 @@ var MapContainer = React.createClass({
       districts: null,
       repdata: null,
       mapDefaults: {
-        zoom: 5,
+        zoom: 4,
         center: {lat: 40, lng: -95}
       }
     }
