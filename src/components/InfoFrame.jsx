@@ -8,9 +8,18 @@ var MoneyDisplay = require('./MoneyDisplay.jsx');
 var EducationDisplay = require('./EducationDisplay.jsx');
 var PeopleDisplay = require('./PeopleDisplay.jsx');
 var ElectionsDisplay = require('./ElectionsDisplay.jsx');
+var superagent = require('superagent');
 
 var InfoFrame = React.createClass({
-
+  componentWillMount: function() {
+    superagent
+      .get('results_2012.json')
+      .end(function(err, res) {
+        this.setState({
+          elections: res.body
+        });
+      }.bind(this))
+  },
   render: function() {
     if (!this.props.district || !this.props.infoType) {
       return <section className="right-side-info"></section>;
@@ -33,7 +42,7 @@ var InfoFrame = React.createClass({
         displayElement = <PeopleDisplay district={this.props.district.feature.properties}/>;
         break;
       case 'ELECTIONS':
-        displayElement = <ElectionsDisplay district={this.props.district.feature.properties}/>;
+        displayElement = <ElectionsDisplay district={this.props.district.feature.properties} elections={this.state.elections}/>;
         break;
       default:
         displayElement = <p>Error loading component</p>;
