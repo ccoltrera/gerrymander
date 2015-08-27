@@ -23,27 +23,31 @@ var MoneyDisplay = React.createClass({
 
     var displayElement;
 
-    if (this.state && this.state.district) {
+    if (this.state) {
 
       var district = this.state.district;
-      var state = this.state.state;
-      displayElement = [
+      var districtListEl = district ? (
         <ul>
           <h4>this district</h4>
           <li>{'Median household income: ' + district.median_hh_income['Median household income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
           <li>{'Per capita income: ' + district.pc_income['Per capita income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
           <li>{'Number on public assistance programs or Food Stamps/SNAP: ' + district.pub_assist['With cash public assistance or Food Stamps/SNAP'].estimate}</li>
         </ul>
-        ,
+      ) : <ul></ul>;
+
+      var state = this.state.state;
+      var stateListEl = state ? (
         <ul>
           <h4>state as a whole</h4>
           <li>{'Median household income: ' + state.median_hh_income['Median household income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
           <li>{'Per capita income: ' + state.pc_income['Per capita income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
           <li>{'Number on public assistance programs or Food Stamps/SNAP: ' + state.pub_assist['With cash public assistance or Food Stamps/SNAP'].estimate}</li>
         </ul>
-      ];
-    }
-    else displayElement = <p>loading data...</p>;
+      ) : <ul></ul>;
+
+      displayElement = [districtListEl, stateListEl];
+
+    } else displayElement = <p>loading data...</p>;
 
     return (
       <div>

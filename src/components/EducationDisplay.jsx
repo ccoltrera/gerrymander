@@ -37,13 +37,10 @@ var EducationDisplay = React.createClass({
 
     var displayElement;
 
-    if (this.state && this.state.district) {
-
-      console.log(this.state.district);
+    if (this.state) {
 
       var district = this.state.district;
-      var state = this.state.state;
-      displayElement = [
+      var districtListEl = district ? (
         <ul>
           <h4>this district</h4>
           {buildListElement('Education', district.ed_attain, 'estimate')}
@@ -54,7 +51,10 @@ var EducationDisplay = React.createClass({
             <li>{'Speak only English: ' + district.lang_spoken['Speak only English'].estimate}</li>
           </ul>
         </ul>
-        ,
+      ) : <ul></ul>;
+
+      var state = this.state.state;
+      var stateListEl = state ? (
         <ul>
           <h4>state as a whole</h4>
           {buildListElement('Education', state.ed_attain, 'estimate')}
@@ -65,9 +65,11 @@ var EducationDisplay = React.createClass({
             <li>{'Speak only English: ' + state.lang_spoken['Speak only English'].estimate}</li>
           </ul>
         </ul>
-      ];
-    }
-    else displayElement = <p>loading data...</p>;
+      ) : <ul></ul>;
+
+      displayElement = [districtListEl, stateListEl];
+
+    } else displayElement = <p>loading data...</p>;
 
     return (
       <div>
