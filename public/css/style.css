@@ -1,13 +1,30 @@
+/*
+Colors:
+Highlight
+    #aa863a;
+    rgb(170, 134, 58);
+Light
+  #f0eceb;
+  rgb(240, 236, 235);
+Dark
+  #283018;
+  rgb(40, 48, 24);
+Teal
+  #729f98
+  rgb(114, 159, 152)
+*/
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  color: #283018;
+  color: rgb(40, 48, 24);
   background: #f0eceb;
+  background: rgb(240, 236, 235);
   font-family: 'Franklin Gothic Medium','Franklin Gothic','ITC Franklin Gothic',Arial,sans-serif;
 }
 * {
   margin: 0;
-  color: #283018;
 }
 .wrapper {
   height: 100%;
@@ -17,20 +34,19 @@ header {
   position: relative;
   text-align: center;
   height: 48px;
+  color: #283018;
+  color: rgb(40, 48, 24);
+  background: #729f98;
+  background: rgb(114, 159, 152);
   border-bottom: solid 1px #283018;
-}
-header label {
-  font-size: 35px;
-  position: absolute;
-  top: 0;
-  left: 0;
+  border-bottom: solid 1px rgb(40, 48, 24);
 }
 header h1 {
   margin: auto;
   margin-top: 7px;
   font-weight: 100;
 }
-main {
+#main-container {
   height: calc(100% - 48px);
   width: 100%;
   overflow: auto;
@@ -40,21 +56,24 @@ main {
   height: calc(100% - 115px);
   width: 100%;
 }
-
 #info-frame {
   position: absolute;
   bottom: -70px;
+  padding: 10px;
+  overflow: scroll;
+  color: rgb(40, 48, 24);
+  background: #f0eceb;
+  background: rgb(240, 236, 235);
+  background: rgba(240, 236, 235, 0.75);
 }
 #info-frame.active {
   width: 100%;
   height: 185px;
-  overflow: scroll;
   margin-top: -185px;
-  background: rgb(240, 236, 235);
-  background: rgba(240, 236, 235, 0.75);
   z-index: 1000;
   transition: 1s;
   bottom: 115px;
+  box-sizing: border-box;
 }
 @media screen and (min-width: 600px) {
   #info-frame {
@@ -62,18 +81,27 @@ main {
     bottom: 115px;
   }
   #info-frame.active {
-    height: calc(100% - 115px);
     width: 30%;
-    overflow: scroll;
-    position: absolute;
+    height: calc(100% - 115px);
     top: 0;
     right: 0;
     margin-top: 0;
   }
 }
+#info-frame h2, #info-frame h3, #info-frame h4 {
+  font-size: 1em;
+}
+#info-frame > div {
+    font-size: 0.8em;
+}
+#info-frame ul {
+  list-style: none;
+  padding: 0;
+}
 footer {
   clear: both;
   height: 115px;
+  background: #f0eceb;
   background: rgb(240, 236, 235);
   position: relative;
   z-index: 2000;
@@ -95,26 +123,26 @@ footer li {
 }
 footer li span.text {
   display: block;
-  font-size: 10px;
+  font-size: 0.7em;
   padding: 13px 0 15px;
 }
 footer li:hover span.text {
   color: #aa863a;
+  color: rgb(170, 134, 58);
 }
 footer li.active span.text {
   color: #aa863a;
+  color: rgb(170, 134, 58);
 }
 footer li span.icon {
   display: block;
   margin: auto;
   height: 60px;
   width: 60px;
-  background-color: #e6e2e1;
+  background: #e6e2e1;
+  background: rgb(230, 226, 225);
 }
-footer li:hover span.icon {
+footer li:hover span.icon, footer li.active span.icon  {
   background: #aa863a;
+  background: rgb(170, 134, 58);
 }
-footer li.active span.icon {
-  background: #aa863a;
-}
-
