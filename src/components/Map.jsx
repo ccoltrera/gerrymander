@@ -113,7 +113,7 @@ var MapComponent = React.createClass({
     var leafletGJ = gJ ? gJ.leafletElement : null;
     var infoFrame = this.state.district && this.state.infoType
     var map = (
-      <main>
+      <main id="main-container">
         <Map id="map" ref="map" center={this.props.mapDefaults.center} zoom={this.props.mapDefaults.zoom}>
           <TileLayer
             url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
@@ -122,7 +122,7 @@ var MapComponent = React.createClass({
           {gJ}
         </Map>
         <InfoFrame district={this.state.district} infoType={this.state.infoType} repdata={this.props.repdata}/>
-        <NavFrame selectInfoType={this.selectInfoType}/>
+        <NavFrame selectInfoType={this.selectInfoType} infoType={this.state.infoType}/>
       </main>
     );
 
