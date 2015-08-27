@@ -26,7 +26,7 @@ var InfoFrame = React.createClass({
       return (
         <section className="active" id="info-frame">
           <h2>Gerrymander |ˈʤɛriˌmændər|</h2>
-          <p>(n.) manipulate the boundaries of an electoral constituency so as to favor one party or class.</p>
+          <p>(v.) manipulate the boundaries of an electoral constituency so as to favor one party or class.</p>
           <br />
           <h2>Gerrymender |ˈʤɛriˌmɛndər|</h2>
           <p>(n.) an app to help people explore, and mend, the 'mandering.</p>
