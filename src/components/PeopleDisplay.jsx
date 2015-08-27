@@ -20,7 +20,12 @@ var PeopleDisplay = React.createClass({
 
   render: function() {
 
+    var displayElement;
+
     if (this.state) {
+
+      var districtListEl;
+      var stateListEl;
 
       if (this.state.district) {
         var district = this.state.district;
@@ -28,7 +33,7 @@ var PeopleDisplay = React.createClass({
         var landArea = this.props.district.ALAND * 3.86102e-7;
         var popPerSqMile = (totalPopulation / landArea).toFixed(2);
         var mixedRace = district.race['Two races excluding Some other race, and three or more races'].estimate + district.race['Two races including Some other race'].estimate + district.race['Two or more races:'].estimate;
-        var districtListEl = (
+        districtListEl = (
           <ul>
             <h4>this district</h4>
             <li>{'Total population : ' + totalPopulation}</li>
@@ -47,11 +52,12 @@ var PeopleDisplay = React.createClass({
       } else districtListEl = <ul></ul>;
 
       if (this.state.state) {
+
         var state = this.state.state;
         var totalPopulation = state.total_pop.Total.estimate;
         var landArea;
         var mixedRace = state.race['Two races excluding Some other race, and three or more races'].estimate + state.race['Two races including Some other race'].estimate + state.race['Two or more races:'].estimate;
-        var stateListEl = (
+        stateListEl = (
           <ul>
             <h4>state as a whole</h4>
             <li>{'Total population : ' + totalPopulation}</li>
