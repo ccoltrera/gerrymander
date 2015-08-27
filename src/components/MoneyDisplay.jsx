@@ -35,8 +35,8 @@ var MoneyDisplay = React.createClass({
         districtListEl = (
           <ul>
             <h4>this district</h4>
-            <li>{'Median household income: ' + district.median_hh_income['Median household income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
-            <li>{'Per capita income: ' + district.pc_income['Per capita income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
+            <li>{'Median household income: $' + district.median_hh_income['Median household income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate.toLocaleString()}</li>
+            <li>{'Per capita income: $' + district.pc_income['Per capita income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate.toLocaleString()}</li>
             <li>{'With cash public assistance or Food Stamps/SNAP: ' + ((district.pub_assist['With cash public assistance or Food Stamps/SNAP'].estimate / district.pub_assist['Total:'].estimate) * 100).toFixed(2) + '%'}</li>
           </ul>
         );
@@ -48,8 +48,8 @@ var MoneyDisplay = React.createClass({
         stateListEl = (
           <ul>
             <h4>state as a whole</h4>
-            <li>{'Median household income: ' + state.median_hh_income['Median household income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
-            <li>{'Per capita income: ' + state.pc_income['Per capita income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
+            <li>{'Median household income: $' + state.median_hh_income['Median household income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate.toLocaleString()}</li>
+            <li>{'Per capita income: $' + state.pc_income['Per capita income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate.toLocaleString()}</li>
             <li>{'With cash public assistance or Food Stamps/SNAP: ' + ((state.pub_assist['With cash public assistance or Food Stamps/SNAP'].estimate / state.pub_assist['Total:'].estimate) * 100).toFixed(2) + '%'}</li>
           </ul>
         );
