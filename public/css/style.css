@@ -52,7 +52,7 @@ main {
   margin-top: -185px;
   background: rgb(240, 236, 235);
   background: rgba(240, 236, 235, 0.75);
-  z-index: 5000;
+  z-index: 1000;
   transition: 1s;
   bottom: 115px;
 }
@@ -72,8 +72,11 @@ main {
   }
 }
 footer {
-  height: 115px;
   clear: both;
+  height: 115px;
+  background: rgb(240, 236, 235);
+  position: relative;
+  z-index: 2000;
 }
 footer ul {
   list-style: none;
