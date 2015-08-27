@@ -5,7 +5,7 @@ var statesByFIPS = require('../data/statesByFIPS');
 var InfoDisplay = require('./InfoDisplay.jsx');
 var MoneyDisplay = require('./MoneyDisplay.jsx');
 var EducationDisplay = require('./EducationDisplay.jsx');
-var PeopleDisplay = require('./PeopleDisplay.jsx');
+var RaceDisplay = require('./RaceDisplay.jsx');
 var ElectionsDisplay = require('./ElectionsDisplay.jsx');
 var superagent = require('superagent');
 
@@ -43,8 +43,8 @@ var InfoFrame = React.createClass({
       case 'EDUCATION':
         displayElement = <EducationDisplay district={this.props.district.feature.properties}/>;
         break;
-      case 'PEOPLE':
-        displayElement = <PeopleDisplay district={this.props.district.feature.properties}/>;
+      case 'RACE':
+        displayElement = <RaceDisplay district={this.props.district.feature.properties}/>;
         break;
       case 'ELECTIONS':
         displayElement = <ElectionsDisplay district={this.props.district.feature.properties} elections={this.state.elections}/>;
