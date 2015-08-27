@@ -2,7 +2,7 @@
 var React = require('react');
 
 var NavFrame = React.createClass({
-  buttons: ['INFO', 'MONEY', 'EDUCATION', 'PEOPLE', 'ELECTIONS'],
+  buttons: ['INFO', 'MONEY', 'EDUCATION', 'RACE', 'ELECTIONS'],
   clickHandle: function(i) {
     this.props.selectInfoType(this.buttons[i]);
   },
