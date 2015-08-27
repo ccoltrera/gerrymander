@@ -92,7 +92,6 @@ var MapComponent = React.createClass({
               var leafletMap = this.refs.map.leafletElement;
               // leafletMap.fitBounds(e.target.getBounds());
               var mapSize = leafletMap.getSize();
-              console.log(mapSize);
               var sidebarWidth = (this.state.infoType || this.state.district) ? mapSize.x * 0.30 : 0;
               var sidebarHeight = (this.state.infoType || this.state.district) ? 185 : 0;
               var adjPoint = mapSize.x > 600 ? (

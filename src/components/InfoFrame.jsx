@@ -27,7 +27,9 @@ var InfoFrame = React.createClass({
         <section className="active" id="info-frame">
           <h2>Gerrymander |ˈʤɛriˌmændər|</h2>
           <p>(n.) manipulate the boundaries of an electoral constituency so as to favor one party or class.</p>
+          <br />
           <hr />
+          <br />
           <p>
             Gerrymandering is a big problem in the U.S. electoral system, but it can be difficult to explain and even more difficult to explore. That's why we made this tool.
           </p>
@@ -38,7 +40,17 @@ var InfoFrame = React.createClass({
           <p>
             And information tabs
           </p>
-            <h1>↓</h1>
+          <h1>↓</h1>
+          <br />
+          <hr />
+          <h3>Questions to Explore</h3>
+          <br />
+          <ul>
+            <li>Who benefits from the shape of a district?</li>
+            <li>What groups of people are concentrated in one district, or another?</li>
+            <li>Who tends to vote for what parties?</li>
+            <li>Who draws the districts in each state?</li>
+          </ul>
         </section>
       );
     }
