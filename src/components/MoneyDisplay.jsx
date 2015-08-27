@@ -5,10 +5,18 @@ var getStateReport = censusData.getStateReport;
 
 var MoneyDisplay = React.createClass({
 
-  componentDidMount: function() {
+  queryDataAndSetStateAsync: function(props) {
     var fields = ['median_hh_income', 'pc_income', 'pub_assist'];
-    getCDReport.call(this, this.props.district.GEOID, fields);
-    getStateReport.call(this, this.props.district.STATEFP, fields);
+    getCDReport.call(this, props.district.GEOID, fields);
+    getStateReport.call(this, props.district.STATEFP, fields);
+  },
+
+  componentDidMount: function() {
+    this.queryDataAndSetStateAsync(this.props);
+  },
+
+  componentWillReceiveProps: function(newprops) {
+    this.queryDataAndSetStateAsync(newprops);
   },
 
   render: function() {
@@ -16,6 +24,7 @@ var MoneyDisplay = React.createClass({
     var displayElement;
 
     if (this.state && this.state.district) {
+
       var district = this.state.district;
       var state = this.state.state;
       displayElement = [
