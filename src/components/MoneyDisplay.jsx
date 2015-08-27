@@ -1,23 +1,61 @@
 var React = require('react');
+var censusData = require('../util/cen-rep-rep');
+var getCDReport = censusData.getCDReport;
+var getStateReport = censusData.getStateReport;
 
 var MoneyDisplay = React.createClass({
+
+  queryDataAndSetStateAsync: function(props) {
+    var fields = ['median_hh_income', 'pc_income', 'pub_assist'];
+    getCDReport.call(this, props.district.GEOID, fields);
+    getStateReport.call(this, props.district.STATEFP, fields);
+  },
+
+  componentDidMount: function() {
+    this.queryDataAndSetStateAsync(this.props);
+  },
+
+  componentWillReceiveProps: function(newprops) {
+    this.queryDataAndSetStateAsync(newprops);
+  },
+
   render: function() {
-    return <p>MoneyDisplay</p>;
+
+    var displayElement;
+
+    if (this.state) {
+
+      var district = this.state.district;
+      var districtListEl = district ? (
+        <ul>
+          <h4>this district</h4>
+          <li>{'Median household income: ' + district.median_hh_income['Median household income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
+          <li>{'Per capita income: ' + district.pc_income['Per capita income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
+          <li>{'Number on public assistance programs or Food Stamps/SNAP: ' + district.pub_assist['With cash public assistance or Food Stamps/SNAP'].estimate}</li>
+        </ul>
+      ) : <ul></ul>;
+
+      var state = this.state.state;
+      var stateListEl = state ? (
+        <ul>
+          <h4>state as a whole</h4>
+          <li>{'Median household income: ' + state.median_hh_income['Median household income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
+          <li>{'Per capita income: ' + state.pc_income['Per capita income in the past 12 months (in 2013 inflation-adjusted dollars)'].estimate}</li>
+          <li>{'Number on public assistance programs or Food Stamps/SNAP: ' + state.pub_assist['With cash public assistance or Food Stamps/SNAP'].estimate}</li>
+        </ul>
+      ) : <ul></ul>;
+
+      displayElement = [districtListEl, stateListEl];
+
+    } else displayElement = <p>loading data...</p>;
+
+    return (
+      <div>
+        <h3>MONEY</h3>
+        {displayElement}
+      </div>
+    );
   }
 });
-
-// MONEY: {
-//     district: {
-//       incomeByHousehold: getCDReport('hh_income'),
-//       incomePerCapita: getCDReport('pc_income'),
-//       incomeByHouseholdMedian: getCDReport('median_hh_income'),
-//       publicAssistance: getCDReport('pub_assist')
-//     },
-// state: {
-//       incomeByHousehold: getStateReport('hh_income'),
-//       incomePerCapita: getStateReport('pc_income'),
-//       incomeByHouseholdMedian: getStateReport('median_hh_income'),
-//       publicAssistance: getStateReport('pub_assist')
-//     }
 
 module.exports = MoneyDisplay;

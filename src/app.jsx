@@ -2,6 +2,7 @@
 
 var React = require('react');
 var HeaderContainer = require('./components/HeaderContainer.jsx');
+// var InfoFrameAction = require('./components/InfoFrameAction.jsx');
 var MapComponent = require('./components/Map.jsx');
 var superagent = require('superagent');
 
@@ -57,7 +58,7 @@ var MapContainer = React.createClass({
     this.loadElectionData();
   },
   render: function() {
-    var mapComponent = <MapComponent {...this.state}/>;
+    var mapComponent = <MapComponent {...this.state} />;
     var loadingDisplay = <p>loading map...</p>;
     return (
       <div className="wrapper">

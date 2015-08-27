@@ -1,6 +1,5 @@
 'use strict';
 var React = require('react');
-var censusData = require('../util/cen-rep-rep');
 var data = ['INFO', 'MONEY', 'EDUCATION', 'PEOPLE', 'ELECTIONS'];
 var statesByFIPS = require('../data/statesByFIPS');
 var InfoDisplay = require('./InfoDisplay.jsx');
@@ -21,8 +20,14 @@ var InfoFrame = React.createClass({
       }.bind(this))
   },
   render: function() {
-    if (!this.props.district || !this.props.infoType) {
-      return <section className="right-side-info"></section>;
+    if (!this.props.district && !this.props.infoType) {
+      return <section id="info-frame"></section>;
+    } else if (!this.props.district || !this.props.infoType) {
+      return (
+        <section className="active" id="info-frame">
+          <p>Learn to use this app!</p>
+        </section>
+      );
     }
     var displayElement;
     var state = statesByFIPS[this.props.district.feature.properties.STATEFP];
@@ -30,7 +35,7 @@ var InfoFrame = React.createClass({
 
     switch (this.props.infoType) {
       case 'INFO':
-        displayElement = <InfoDisplay district={this.props.district.feature.properties}/>;
+        displayElement = <InfoDisplay district={this.props.district.feature} repdata={this.props.repdata}/>;
         break;
       case 'MONEY':
         displayElement = <MoneyDisplay district={this.props.district.feature.properties}/>;
@@ -49,7 +54,7 @@ var InfoFrame = React.createClass({
     }
 
     return (
-      <section className="right-side-info">
+      <section className="active" id="info-frame">
         <h2>{state + " " + districtName}</h2>
         {displayElement}
       </section>

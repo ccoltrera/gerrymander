@@ -51,6 +51,7 @@ function cenRepJSONParser (cenRepJSON, geoID) {
 
 // takes 4 digit congressional district geoID, ACS table id number
 function getCDReport(cd_geoID, req_str_arr) {
+  var self = this;
   var t_id = req_str_arr.map(function(req_str) {
     return t_ids[req_str];
   }).join(',');
@@ -59,16 +60,20 @@ function getCDReport(cd_geoID, req_str_arr) {
   superagent
     .get(endpoint)
     .end(function(err, res) {
+      // console.log("Response:", res.body)
       var parsed_data = cenRepJSONParser(res.body, geoID);
+      // console.log('parsed_data:', parsed_data);
       var stateObj = {};
       stateObj['district'] = parsed_data;
-      // console.log(stateObj);
-      this.setState(stateObj);
+      // console.log("stateObj:", stateObj);
+      // console.log(self);
+      self.setState(stateObj);
     });
 }
 
 // takes state FIPS, ACS table id number
 function getStateReport(stateFP, req_str_arr) {
+  var self = this;
   var t_id = req_str_arr.map(function(req_str) {
     return t_ids[req_str];
   }).join(',');
@@ -77,11 +82,12 @@ function getStateReport(stateFP, req_str_arr) {
   superagent
     .get(endpoint)
     .end(function(err, res) {
+      // console.log(res.body)
       var parsed_data = cenRepJSONParser(res.body, geoID);
       var stateObj = {};
       stateObj['state'] = parsed_data;
       // console.log(stateObj);
-      this.setState(stateObj);
+      self.setState(stateObj);
     });
 }
 
