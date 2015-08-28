@@ -52,6 +52,7 @@ header h1 {
   overflow: scroll;
   color: rgb(40, 48, 24);
   background: rgba(226, 239, 252, .7);
+  box-sizing: border-box;
 }
 #info-frame.active {
   width: 100%;
@@ -60,11 +61,14 @@ header h1 {
   z-index: 1000;
   transition: 1s;
   bottom: 115px;
-  box-sizing: border-box;
+}
+#info-frame.close {
+  bottom: -70px;
+  transition: 1s;
 }
 @media screen and (min-width: 600px) {
   #info-frame {
-    right: -30%;
+    right: 30%;
     bottom: 115px;
   }
   #info-frame.active {
@@ -74,6 +78,19 @@ header h1 {
     right: 0;
     margin-top: 0;
   }
+  #info-frame.close {
+    right: -30%;
+    bottom: 115px;
+    transition: 1s;
+  }
+}
+#info-frame .fa {
+  cursor: pointer;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+#info-frame .fa:hover {
+  color: rgba(0, 116, 228, 1);
 }
 #info-frame h2, #info-frame h3, #info-frame h4 {
   font-size: 1em;
@@ -123,6 +140,11 @@ footer li span.icon {
   width: 60px;
   background: rgba(226, 239, 252, 1);
 }
+footer .fa {
+  font-size: 45px;
+  margin-top: 9px;
+}
 footer li:hover span.icon, footer li.active span.icon {
+  color: rgba(226, 239, 252, 1);
   background: rgba(0, 116, 228, 1);
 }
