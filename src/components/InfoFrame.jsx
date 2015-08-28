@@ -5,7 +5,7 @@ var statesByFIPS = require('../data/statesByFIPS');
 var InfoDisplay = require('./InfoDisplay.jsx');
 var MoneyDisplay = require('./MoneyDisplay.jsx');
 var EducationDisplay = require('./EducationDisplay.jsx');
-var PeopleDisplay = require('./PeopleDisplay.jsx');
+var RaceDisplay = require('./RaceDisplay.jsx');
 var ElectionsDisplay = require('./ElectionsDisplay.jsx');
 var superagent = require('superagent');
 
@@ -21,7 +21,9 @@ var InfoFrame = React.createClass({
   },
   render: function() {
     if (!this.props.district && !this.props.infoType) {
-      return <section id="info-frame"></section>;
+      return (
+        <section id="info-frame"></section>
+      );
     } else if (!this.props.district || !this.props.infoType) {
       return (
         <section className="active" id="info-frame">
@@ -37,7 +39,6 @@ var InfoFrame = React.createClass({
           <p>
             Gerrymandering is a big problem in the U.S. electoral system, but it can be difficult to explain and even more difficult to explore. That's why we made this tool.
           </p>
-          <br />
           <p>
             Explore the issue by clicking on districts
           </p>
@@ -49,7 +50,7 @@ var InfoFrame = React.createClass({
           <br />
           <hr />
           <br />
-          <h3>Questions to Explore:</h3>
+          <h3>Questions to Explore: </h3>
           <br />
           <ul>
             <li>Who benefits from the shape of a district?</li>
@@ -74,8 +75,8 @@ var InfoFrame = React.createClass({
       case 'EDUCATION':
         displayElement = <EducationDisplay district={this.props.district.feature.properties}/>;
         break;
-      case 'PEOPLE':
-        displayElement = <PeopleDisplay district={this.props.district.feature.properties}/>;
+      case 'RACE':
+        displayElement = <RaceDisplay district={this.props.district.feature.properties}/>;
         break;
       case 'ELECTIONS':
         displayElement = <ElectionsDisplay district={this.props.district.feature.properties} elections={this.state.elections}/>;
@@ -86,6 +87,7 @@ var InfoFrame = React.createClass({
 
     return (
       <section className="active" id="info-frame">
+        <span id="close" onClick={this.props.closeFrame}>X</span>
         <h2>{state + " " + districtName}</h2>
         {displayElement}
       </section>
