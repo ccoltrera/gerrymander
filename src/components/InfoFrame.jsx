@@ -21,12 +21,17 @@ var InfoFrame = React.createClass({
   },
   render: function() {
     if (!this.props.district && !this.props.infoType) {
+      var className = "close";
       return (
-        <section id="info-frame" className="close"></section>
-      );
-    } else if (!this.props.district || !this.props.infoType) {
+        <section className={className} id="info-frame">
+          <span id="close" onClick={this.props.closeFrame}><i className="fa fa-times-circle"></i></span>
+        </section>
+      )
+    }
+    if (!this.props.district || !this.props.infoType) {
+      var className = "active";
       return (
-        <section className="active" id="info-frame">
+        <section className={className} id="info-frame">
           <div>
             <span id="close" onClick={this.props.closeFrame}><i className="fa fa-times-circle"></i></span>
             <h2>Gerrymander |ˈʤɛriˌmændər|</h2>
@@ -89,7 +94,7 @@ var InfoFrame = React.createClass({
 
     return (
       <section className="active" id="info-frame">
-        <span id="close" onClick={this.props.closeFrame}><i className="fa fa-times-circle"></i></span>
+        <span id="close" onClick={this.props.closeFrame}><i className="fa fa-times-circle"></i></span> <span id="back" onClick={this.props.backFrame}><i className="fa fa-question-circle"></i></span>
         <h2>{state + " " + districtName}</h2>
         {displayElement}
       </section>

@@ -51,6 +51,8 @@ header h1 {
   height: 185px;
   bottom: -70px;
   padding: 10px;
+  height: 185px;
+  width: 100%;
   overflow: scroll;
   color: rgb(40, 48, 24);
   background: rgba(226, 239, 252, .7);
