@@ -15,6 +15,16 @@ var InfoFrame = require('./InfoFrame.jsx');
 var NavFrame = require('./NavFrame.jsx');
 
 var MapComponent = React.createClass({
+  closeFrame: function() {
+    var oldDistrict = this.state.district;
+      if (oldDistrict) oldDistrict.setStyle({
+        fillColor: this.getColor(oldDistrict.feature.properties.STATEFP, oldDistrict.feature.properties.CD113FP)
+    });
+    this.setState({
+      district: null,
+      infoType: ""
+    });
+  },
   selectInfoType: function(infoType) {
     this.setState({
       infoType: infoType
@@ -127,7 +137,7 @@ var MapComponent = React.createClass({
           />
           {gJ}
         </Map>
-        <InfoFrame district={this.state.district} infoType={this.state.infoType} repdata={this.props.repdata}/>
+        <InfoFrame district={this.state.district} infoType={this.state.infoType} closeFrame={this.closeFrame} repdata={this.props.repdata}/>
         <NavFrame selectInfoType={this.selectInfoType} infoType={this.state.infoType}/>
       </main>
     );

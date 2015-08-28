@@ -21,10 +21,13 @@ var InfoFrame = React.createClass({
   },
   render: function() {
     if (!this.props.district && !this.props.infoType) {
-      return <section id="info-frame"></section>;
+      return (
+        <section id="info-frame"></section>
+      );
     } else if (!this.props.district || !this.props.infoType) {
       return (
         <section className="active" id="info-frame">
+          <span id="close" onClick={this.props.closeFrame}>X</span>
           <h2>Gerrymander |ˈʤɛriˌmændər|</h2>
           <p>(n.) manipulate the boundaries of an electoral constituency so as to favor one party or class.</p>
           <br />
@@ -80,6 +83,7 @@ var InfoFrame = React.createClass({
 
     return (
       <section className="active" id="info-frame">
+        <span id="close" onClick={this.props.closeFrame}>X</span>
         <h2>{state + " " + districtName}</h2>
         {displayElement}
       </section>
