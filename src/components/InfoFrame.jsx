@@ -21,36 +21,50 @@ var InfoFrame = React.createClass({
   },
   render: function() {
     if (!this.props.district && !this.props.infoType) {
-      return <section id="info-frame"></section>;
-    } else if (!this.props.district || !this.props.infoType) {
+      var className = "close";
       return (
-        <section className="active" id="info-frame">
-          <h2>Gerrymander |ˈʤɛriˌmændər|</h2>
-          <p>(n.) manipulate the boundaries of an electoral constituency so as to favor one party or class.</p>
-          <br />
-          <hr />
-          <br />
-          <p>
-            Gerrymandering is a big problem in the U.S. electoral system, but it can be difficult to explain and even more difficult to explore. That's why we made this tool.
-          </p>
-          <p>
-            Explore the issue by clicking on districts
-          </p>
-          <h1>↲</h1>
-          <p>
-            And information tabs
-          </p>
-          <h1>↓</h1>
-          <br />
-          <hr />
-          <h3>Questions to Explore</h3>
-          <br />
-          <ul>
-            <li>Who benefits from the shape of a district?</li>
-            <li>What groups of people are concentrated in one district, or another?</li>
-            <li>Who tends to vote for what parties?</li>
-            <li>Who draws the districts in each state?</li>
-          </ul>
+        <section className={className} id="info-frame">
+          <span id="close" onClick={this.props.closeFrame}><i className="fa fa-times-circle"></i></span>
+        </section>
+      )
+    }
+    if (!this.props.district || !this.props.infoType) {
+      var className = "active";
+      return (
+        <section className={className} id="info-frame">
+          <div>
+            <span id="close" onClick={this.props.closeFrame}><i className="fa fa-times-circle"></i></span>
+            <h2>Gerrymander |ˈʤɛriˌmændər|</h2>
+            <p>(v.) manipulate the boundaries of an electoral constituency so as to favor one party or class.</p>
+            <br />
+            <h2>Gerrymender |ˈʤɛriˌmɛndər|</h2>
+            <p>(n.) an app to help people explore, and mend, the 'mandering.</p>
+            <br />
+            <hr />
+            <br />
+            <p>
+              Gerrymandering is a big problem in the U.S. electoral system, but it can be difficult to explain and even more difficult to explore. That's why we made this tool.
+            </p>
+            <p>
+              Explore the issue by clicking on districts
+            </p>
+            <h1>↲</h1>
+            <p>
+              And information tabs
+            </p>
+            <h1>↓</h1>
+            <br />
+            <hr />
+            <br />
+            <h3>Questions to Explore: </h3>
+            <br />
+            <ul>
+              <li>Who benefits from the shape of a district?</li>
+              <li>What groups of people are concentrated in one district, or another?</li>
+              <li>Who tends to vote for what parties?</li>
+              <li>Who draws the districts in each state?</li>
+            </ul>
+            </div>
         </section>
       );
     }
@@ -80,6 +94,7 @@ var InfoFrame = React.createClass({
 
     return (
       <section className="active" id="info-frame">
+        <span id="close" onClick={this.props.closeFrame}><i className="fa fa-times-circle"></i></span> <span id="back" onClick={this.props.backFrame}><i className="fa fa-question-circle"></i></span>
         <h2>{state + " " + districtName}</h2>
         {displayElement}
       </section>
