@@ -29,7 +29,7 @@ function formatTable(array) {
     }
     html.push(output);
   });
-  return html;
+  return <table>{html}</table>;
 }
 
 module.exports = formatTable;
