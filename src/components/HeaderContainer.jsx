@@ -5,7 +5,7 @@ var HeaderContainer = React.createClass({
   render: function() {
     return (
       <header>
-        <h1>Gerrymander</h1>
+        <h1>Gerrymender</h1>
       </header>
     );
   }
