@@ -73,7 +73,7 @@ var InfoDisplay = React.createClass({
         <h3>Gerry Number: {getGerryNumber(this.props.district).polyToCircleRatio.toFixed(2)}</h3>
         <br />
         <p>Gerrymandering is difficult to quantify. One way to do it is to look at how irregular a district is shaped, by comparing a district's area to the area of a circle with the same perimeter. The further below 0.50 that the Gerry Number is, the more irregular the shape is.</p>
-        <br>
+        <br />
         <p>Wyoming's single, rectangular district is 0.49</p>
         <p>Florida District 5 (the long skinny one) is 0.07</p>
       </div>
