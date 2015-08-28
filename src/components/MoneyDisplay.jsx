@@ -44,7 +44,7 @@ var MoneyDisplay = React.createClass({
         [
           'Public assistance or Food Stamps/SNAP',
           ((district.pub_assist['With cash public assistance or Food Stamps/SNAP'].estimate / district.pub_assist['Total:'].estimate) * 100).toFixed(2) + '%',
-          ((state.pub_assist['With cash public assistance or Food Stamps/SNAP'].estimate / district.pub_assist['Total:'].estimate) * 100).toFixed(2) + '%'
+          ((state.pub_assist['With cash public assistance or Food Stamps/SNAP'].estimate / state.pub_assist['Total:'].estimate) * 100).toFixed(2) + '%'
         ]
       ]);
 
