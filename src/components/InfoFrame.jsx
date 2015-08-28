@@ -20,6 +20,7 @@ var InfoFrame = React.createClass({
       }.bind(this))
   },
   render: function() {
+    var districtArrow = window.innerWidth >= 600 ? "↲" : "↑";
     if (!this.props.district && !this.props.infoType) {
       var className = "close";
       return (
@@ -46,11 +47,11 @@ var InfoFrame = React.createClass({
               Gerrymandering is a big problem in the U.S. electoral system, but it can be difficult to explain and even more difficult to explore. That's why we made this tool.
             </p>
             <p>
-              Explore the issue by clicking on districts
+              Explore the issue by clicking on districts:
             </p>
-            <h1>↲</h1>
+            <h1>{districtArrow}</h1>
             <p>
-              And information tabs
+              And information tabs:
             </p>
             <h1>↓</h1>
             <br />
