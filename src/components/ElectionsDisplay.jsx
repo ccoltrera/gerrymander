@@ -35,23 +35,25 @@ var ElectionsDisplay = React.createClass({
     ) : null;
 
     return electionResultsDisplay ? (
-      <table>
-        <thead>
-          <tr>
-            <th colSpan="3">
-              2012 Election Results
-            </th>
-          </tr>
-          <tr>
-            <th>Candidate</th>
-            <th>Party</th>
-            <th>Votes</th>
-          </tr>
-        </thead>
-        <tbody>
-          {electionResultsDisplay}
-        </tbody>
-      </table>
+      <div>
+        <h3>2012 ELECTIONS</h3>
+        <table>
+          <thead>
+            <tr>
+              <th colSpan="3">
+              </th>
+            </tr>
+            <tr>
+              <th>Candidate</th>
+              <th>Party</th>
+              <th>Votes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {electionResultsDisplay}
+          </tbody>
+        </table>
+      </div>
     ) : ( <p>Loading 2012 Election Results...</p> )
   }
 });
